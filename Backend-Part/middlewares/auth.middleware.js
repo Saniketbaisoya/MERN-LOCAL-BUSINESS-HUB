@@ -1,9 +1,10 @@
 import {StatusCodes} from 'http-status-codes'
 import ErrorResponse from '../utils/ErrorResponse.js';
+import AppError from '../utils/AppError.js';
 
 async function authMiddleware(req,res,next) {
     if(!req.body.userName){
-        ErrorResponse.message = "userName is required"
+        ErrorResponse.message = "userName is required";
         return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
     }
     if(!req.body.email){

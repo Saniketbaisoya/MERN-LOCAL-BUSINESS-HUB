@@ -13,6 +13,7 @@ async function authController(req,res) {
         SuccessResponse.data = response;
         return res.status(StatusCodes.CREATED).json(SuccessResponse);
     } catch (error) {
+        ErrorResponse.message = error.message;
         ErrorResponse.error = error;
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }

@@ -1,8 +1,9 @@
 const ErrorResponse = {
     success : false,
     message : "SuccessFully cannot be created !!",
-    data : {},
-    error : {}
+    error : {},
+    data : {}
+    
 }
 
 export default ErrorResponse;
