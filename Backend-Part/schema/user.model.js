@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import bcrypt from "bcryptjs";
 const UserSchema = new mongoose.Schema({
     userName : {
         type : String,
@@ -12,13 +12,27 @@ const UserSchema = new mongoose.Schema({
         unique : true,
     },
     password : {
-        typr : String,
-        required : true
+        type : String,
+        required : true,
     }
-},
-    {timestamps : true}
-)
+},{
+    timestamps : true,
+});
 
-const User = mongoose.model('User',UserSchema);
+UserSchema.pre('save',async function (next){
+    try {
+        // Now abhi userSchema ka use krke maine pre hook function create kiya 
+        // toh this ke liye call site hogya userSchema toh uska pura access this ke andr hoga....
+        const saltOrRounds = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(this.password,saltOrRounds);
+        this.password = hashPassword;
+        next(); // Proceed to save 
+    }catch (error) {
+        next(error);
+    }
+})
+
+
+const User = mongoose.model("User",UserSchema);
 
 export default User;
