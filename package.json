@@ -20,7 +20,10 @@
   "homepage": "https://github.com/Saniketbaisoya/MERN-LOCAL-BUSINESS-HUB#readme",
   "description": "",
   "dependencies": {
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "mongodb": "^6.19.0",
+    "mongoose": "^8.18.0",
     "nodemon": "^3.1.10"
   }
 }
