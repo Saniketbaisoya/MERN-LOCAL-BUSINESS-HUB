@@ -1,0 +1,26 @@
+{
+  "name": "mern-local-buisness",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon Backend-Part/index.js",
+    "dev": "node Backend-Part/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saniketbaisoya/MERN-LOCAL-BUSINESS-HUB.git"
+  },
+  "author": "Shaniket-Baisoya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Saniketbaisoya/MERN-LOCAL-BUSINESS-HUB/issues"
+  },
+  "homepage": "https://github.com/Saniketbaisoya/MERN-LOCAL-BUSINESS-HUB#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
