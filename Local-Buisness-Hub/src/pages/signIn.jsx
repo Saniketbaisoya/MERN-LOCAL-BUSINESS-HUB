@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import { useEffect } from 'react';
 /**
  * SignUp means login yani user iss component ke upr login krega.
  * With the given details (userName,email and password)
@@ -23,6 +24,15 @@ export default function SignUp() {
   };
   console.log(formData);
 
+  useEffect(()=>{
+    console.log("Inside");
+    if(error){
+      const timer = setTimeout(() => {
+        setError(null); // clear error after 2 seconds
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  },[error])
   /**
    * Now this event handler is the function of the signIp button 
    * Means when we click to the button then this handleSubmit eventHandler should be executed 
