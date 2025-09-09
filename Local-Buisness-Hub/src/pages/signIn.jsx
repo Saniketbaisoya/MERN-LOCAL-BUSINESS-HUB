@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import { useState } from 'react'
+import {data, Link, useNavigate} from 'react-router-dom'
 import { useEffect } from 'react';
+import { signInFailure, signInStart, signInSuccess } from '../redux/users/slice.js';
+import { useDispatch, useSelector } from 'react-redux';
 /**
  * SignUp means login yani user iss component ke upr login krega.
  * With the given details (userName,email and password)
@@ -10,9 +12,12 @@ import { useEffect } from 'react';
  */
 export default function SignUp() {
   const [formData,setFormData] = useState({});
+  
+  // const [error,setError] = useState(null);
+  // const[loading,setLoading] = useState(false); 
+  const {error,loading} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error,setError] = useState(null);
-  const[loading,setLoading] = useState(false);
 
 
   const handleChange = (e) =>{
@@ -28,7 +33,7 @@ export default function SignUp() {
     console.log("Inside");
     if(error){
       const timer = setTimeout(() => {
-        setError(null); // clear error after 2 seconds
+        // dispatch(signInFailure(null)) // clear error after 2 seconds
       }, 2000);
       return () => clearTimeout(timer);
     }
@@ -46,7 +51,7 @@ export default function SignUp() {
       // Now iss yha proxy ka use krke jo authRouter(backend) pr request raise kr rhe hai
       // isme proxy ka methond kya hoga usko alg se req ki jgh define krte hai
       // also yha req data ka type kaisa hoga voh bhi dege...
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch('/api/signin',{
         method : 'POST',
         headers : {
@@ -56,18 +61,24 @@ export default function SignUp() {
       });
       const data = await res.json();
       console.log(data);
-      if(data.success == false){
-        setLoading(false)
-        setError(data.message);
+      if(data.success === false){
+        // setLoading(false)
+        // setError(data.message);
+        /**
+         * loading : false,
+         * error = data.message
+         */
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
-
+      // setLoading(false);
+      // setError(null);
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      // setLoading(false);
+      // setError(error.message);
+      dispatch(signInFailure(error.message));
     }
   };
   console.log(formData);
@@ -86,8 +97,9 @@ export default function SignUp() {
           rounded-lg uppercase hover:bg-opacity-95 disabled:opacity-80 shadow-2xl'
           >{loading ? 'Loading...' : 'Sign In'}</button>
         </form>
-        <div className='flex gap-1 mt-2'>
+        <div className='flex gap-2 mt-1.2'>
           <p className='font-semibold'> Dont have an account?</p>
+          
           <Link to="/signUp">
           <span className='text-blue-700 hover:underline font-semibold hover:opacity-85'>Sign Up</span>
           </Link>
