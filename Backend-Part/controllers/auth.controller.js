@@ -2,6 +2,9 @@ import { authService, googleService, signInService } from "../service/auth.servi
 import ErrorResponse from "../utils/ErrorResponse.js";
 import SuccessResponse from "../utils/successResponse.js";
 import {StatusCodes} from 'http-status-codes'
+import jwt from 'jsonwebtoken';
+import { SECRET_KEY } from "../configuration/serverConfig.js";
+import User from "../schema/user.model.js";
 async function signUp(req,res) {
     try {
         const response = await authService({
@@ -27,12 +30,16 @@ async function signIn(req,res) {
             email : req.body.email,
             password : req.body.password
         })
-        delete response.password;
-        SuccessResponse.message = "Successfully login !!";
-        res.cookie("access-token",response,{
+        
+        const token = await jwt.sign({id : response._id, email : response.email},SECRET_KEY);
+        res.cookie("access-token",token,{
             httpOnly : true,
             secure : false
         })
+
+        const {password : pass, ...rest} = response._doc;
+        SuccessResponse.data = rest;
+        SuccessResponse.message = "Successfully login !!";
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {
         ErrorResponse.message = error.message;
@@ -48,17 +55,35 @@ async function google(req,res) {
      * But from the frontend of the OAuth the avatar is also come so that case we need to handle it
      */
     try {
-        const response = await googleService({
-            name : req.body.name,
-            email : req.body.email,
-            avatar : req.body.avatar
-        })
-        res.cookie("access-token",response,{
-            httpOnly : true,
-            secure : false
-        })
-        SuccessResponse.message = "SuccessFully login with Google !!";
-        return res.status(StatusCodes.OK).json(SuccessResponse);
+        const user = await User.findOne({email : req.body.email});
+        if(user){
+            const token = await jwt.sign({id: user._id, email: user.email},SECRET_KEY);
+
+            res.cookie("access-token",token,{
+                httpOnly : true,
+                secure : false
+            })
+            SuccessResponse.message = "SuccessFully login with Google !!";
+            const {password : pass, ...rest} = user._doc;
+            SuccessResponse.data = rest;
+            return res.status(StatusCodes.OK).json(SuccessResponse);
+        }else{
+            const response = await googleService({
+                name : req.body.name,
+                email : req.body.email,
+                avatar : req.body.avatar
+            })
+        
+            const token = jwt.sign({id : response._id, email : response.email},SECRET_KEY);
+            res.cookie("access-token",token,{
+                httpOnly : true,
+                secure : false
+            })
+            SuccessResponse.message = "SuccessFully login with Google !!";
+            const {password : pass, ...rest} = response._doc;
+            SuccessResponse.data = rest;
+            return res.status(StatusCodes.OK).json(SuccessResponse);
+        }
     } catch (error) {
         ErrorResponse.message = error.message,
         ErrorResponse.error = error;
