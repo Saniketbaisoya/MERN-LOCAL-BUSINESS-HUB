@@ -27,6 +27,7 @@ async function signIn(req,res) {
             email : req.body.email,
             password : req.body.password
         })
+        delete response.password;
         SuccessResponse.message = "Successfully login !!";
         res.cookie("access-token",response,{
             httpOnly : true,
