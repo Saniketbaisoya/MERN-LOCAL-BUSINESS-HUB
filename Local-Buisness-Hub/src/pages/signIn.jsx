@@ -3,6 +3,7 @@ import {data, Link, useNavigate} from 'react-router-dom'
 import { useEffect } from 'react';
 import { signInFailure, signInStart, signInSuccess } from '../redux/users/slice.js';
 import { useDispatch, useSelector } from 'react-redux';
+import OAuth from '../components/OAuth.jsx';
 /**
  * SignUp means login yani user iss component ke upr login krega.
  * With the given details (userName,email and password)
@@ -18,7 +19,7 @@ export default function SignUp() {
   const {error,loading} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const mess = "";
 
   const handleChange = (e) =>{
     setFormData({
@@ -33,7 +34,7 @@ export default function SignUp() {
     console.log("Inside");
     if(error){
       const timer = setTimeout(() => {
-        // dispatch(signInFailure(null)) // clear error after 2 seconds
+        dispatch(signInFailure(mess)) // clear error after 2 seconds
       }, 2000);
       return () => clearTimeout(timer);
     }
@@ -76,6 +77,7 @@ export default function SignUp() {
       dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
+      mess = error.message;
       // setLoading(false);
       // setError(error.message);
       dispatch(signInFailure(error.message));
@@ -94,8 +96,10 @@ export default function SignUp() {
             className='border p-3 rounded-lg shadow-2xl' id="password" onChange={handleChange}
           />
           <button disabled={loading} type='submit' className='bg-slate-700 text-white p-3
-          rounded-lg uppercase hover:bg-opacity-95 disabled:opacity-80 shadow-2xl'
-          >{loading ? 'Loading...' : 'Sign In'}</button>
+            rounded-lg uppercase hover:bg-opacity-95 disabled:opacity-80 shadow-2xl'
+            >{loading ? 'Loading...' : 'Sign In'}
+          </button>
+          <OAuth />
         </form>
         <div className='flex gap-2 mt-1.2'>
           <p className='font-semibold'> Dont have an account?</p>

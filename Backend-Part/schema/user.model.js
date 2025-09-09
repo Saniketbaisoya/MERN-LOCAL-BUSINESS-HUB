@@ -14,7 +14,11 @@ const UserSchema = new mongoose.Schema({
     password : {
         type : String,
         required : true,
-    }
+    },
+    avatar : {
+        type : String,
+        default : 'https://www.shutterstock.com/image-vector/avatar-gender-neutral-silhouette-vector-600nw-2470054311.jpg'
+    },
 },{
     timestamps : true,
 });

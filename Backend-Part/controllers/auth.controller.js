@@ -1,4 +1,4 @@
-import { authService, signInService } from "../service/auth.service.js";
+import { authService, googleService, signInService } from "../service/auth.service.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
 import SuccessResponse from "../utils/successResponse.js";
 import {StatusCodes} from 'http-status-codes'
@@ -42,4 +42,28 @@ async function signIn(req,res) {
 
 }
 
-export  {signUp,signIn};
+async function google(req,res) {
+    /**
+     * Now first we send the only email to the service layer 
+     * But from the frontend of the OAuth the avatar is also come so that case we need to handle it
+     */
+    try {
+        const response = await googleService({
+            name : req.body.name,
+            email : req.body.email,
+            avatar : req.body.avatar
+        })
+        res.cookie("access-token",response,{
+            httpOnly : true,
+            secure : false
+        })
+        SuccessResponse.message = "SuccessFully login with Google !!";
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.message = error.message,
+        ErrorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    }
+}
+
+export  {signUp, signIn, google};
