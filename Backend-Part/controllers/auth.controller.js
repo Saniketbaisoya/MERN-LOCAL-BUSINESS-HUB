@@ -32,6 +32,7 @@ async function signIn(req,res) {
         })
         
         const token = await jwt.sign({id : response._id, email : response.email},SECRET_KEY);
+        console.log(token);
         res.cookie("access-token",token,{
             httpOnly : true,
             secure : false
@@ -58,7 +59,7 @@ async function google(req,res) {
         const user = await User.findOne({email : req.body.email});
         if(user){
             const token = await jwt.sign({id: user._id, email: user.email},SECRET_KEY);
-
+            console.log(token);
             res.cookie("access-token",token,{
                 httpOnly : true,
                 secure : false

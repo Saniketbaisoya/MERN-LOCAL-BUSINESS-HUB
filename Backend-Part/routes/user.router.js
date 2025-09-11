@@ -1,5 +1,6 @@
 import express from 'express'
-import userController from '../controllers/user.controller.js';
+import  { userController, updateController } from '../controllers/user.controller.js';
+import isLoggedIn from '../validation/authValidation.js';
 
 const router = express.Router();
 
@@ -8,4 +9,8 @@ const router = express.Router();
  */
 router.get('/test',userController);
 
-export default router
+/**
+ * http://localhost:9000/api/user/update/:id
+ */
+router.patch('/update/:id', isLoggedIn,updateController);
+export default router;
