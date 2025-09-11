@@ -12,5 +12,5 @@ router.get('/test',userController);
 /**
  * http://localhost:9000/api/user/update/:id
  */
-router.patch('/update/:id', isLoggedIn,updateController);
+router.patch('/update/:id' ,isLoggedIn ,updateController);
 export default router;
