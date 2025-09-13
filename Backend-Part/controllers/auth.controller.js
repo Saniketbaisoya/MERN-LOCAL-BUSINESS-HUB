@@ -32,7 +32,6 @@ async function signIn(req,res) {
         })
         
         const token = await jwt.sign({id : response._id, email : response.email},SECRET_KEY);
-        console.log(token);
         res.cookie("access-token",token,{
             httpOnly : true,
             secure : false
@@ -59,7 +58,6 @@ async function google(req,res) {
         const user = await User.findOne({email : req.body.email});
         if(user){
             const token = await jwt.sign({id: user._id, email: user.email},SECRET_KEY);
-            console.log(token);
             res.cookie("access-token",token,{
                 httpOnly : true,
                 secure : false
@@ -92,4 +90,23 @@ async function google(req,res) {
     }
 }
 
-export  {signUp, signIn, google};
+/**
+ * Now signOut ka actual meaning hai ki jo cookie stored hai with token
+ * Agr usko clear krde toh uss case mai jo login session hai voh rhega hi ni
+ * And then hmm login ni rhege toh signOut hi ho jayege toh sirf token ko clear krdena hi signOut hain
+ * Also yeah signOut tbhi hoga jb user ne login kiya hua hoga phele se hi means agr token store hoga tbhi signOut hoga
+ * 
+ */
+async function signOut(req,res) {
+    
+    try {
+        res.clearCookie('access-token');
+        SuccessResponse.message = "User logout sucessfully !!"
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error = error
+        ErrorResponse.message = error.message
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Internal");
+    }
+}
+export  {signUp, signIn, google, signOut};

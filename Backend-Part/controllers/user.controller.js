@@ -54,10 +54,9 @@ async function deleteController(req,res) {
     }
     try {
         await deleteService(req.params.id);
-        SuccessResponse.message = "Successfully deleted the account !!";
 
         res.clearCookie('access-token');
-        res.status(StatusCodes.OK).json(SuccessResponse.message);
+        res.status(StatusCodes.OK).json("Successfully deleted the account !!");
     } catch (error) {
         ErrorResponse.message = error.message;
         ErrorResponse.error = error;
