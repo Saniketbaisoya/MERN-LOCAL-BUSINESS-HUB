@@ -1,6 +1,6 @@
 import express from 'express'
 import authMiddleware from '../middlewares/auth.middleware.js';
-import {google, signIn, signUp} from '../controllers/auth.controller.js';
+import {google, signIn, signOut, signUp} from '../controllers/auth.controller.js';
 
 const router = express.Router();
 
@@ -18,6 +18,11 @@ router.post('/signin',signIn);
  * http://localhost:9000/api/googleAuth
  */
 router.post('/googleAuth',google);
+
+/**
+ * http://localhost:9000/api/signout
+ */
+router.get('/signout',signOut);
 
 export default router;
 
