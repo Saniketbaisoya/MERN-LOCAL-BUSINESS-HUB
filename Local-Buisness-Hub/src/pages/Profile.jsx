@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteInFailure, deleteInStart, deleteInSuccess, signOutFailure, signOutStart, signOutSuccess, updateInFailure, updateInStart, updateInSuccess } from '../redux/users/slice.js';
 import { data, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
   
@@ -139,10 +140,14 @@ export default function Profile() {
         <button type='submit' disabled={loading} className='uppercase bg-slate-700 text-white rounded-lg p-3 hover:opacity-95'>
           {loading ? 'Loading...' : 'Update'}
         </button>
+        <Link 
+          to={'/createlist'} className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-9'>
+        Create Listing
+        </Link>
       </form>
       <div className='flex justify-between'>
-        <span onClick={onDeleteHandle} className='text-red-600 font-semibold cursor-pointer hover:underline hover:opacity-90 py-1.4'>Delete Account</span>
-        <span onClick={handleSignOut} className='text-red-600 font-semibold cursor-pointer hover:underline hover:opacity-90 p-1.4'>Sign Out</span>
+        <span onClick={onDeleteHandle} className='text-red-600 font-semibold cursor-pointer hover:underline hover:opacity-90 py-3.5'>Delete Account</span>
+        <span onClick={handleSignOut} className='text-red-600 font-semibold cursor-pointer hover:underline hover:opacity-90 py-3.5'>Sign Out</span>
       </div>
       <p className='text-red-700  border-red-200 mt-5'>{error ? error : ''}</p>
 
