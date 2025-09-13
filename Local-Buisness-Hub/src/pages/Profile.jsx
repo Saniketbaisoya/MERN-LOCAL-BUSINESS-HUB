@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteInFailure, deleteInStart, deleteInSuccess, signOutFailure, signOutStart, signOutSuccess, updateInFailure, updateInStart, updateInSuccess } from '../redux/users/slice.js';
-import { useNavigate } from 'react-router-dom';
+import { data, useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   
@@ -97,7 +97,7 @@ export default function Profile() {
       currentUser = null;
     } catch (error) {
       console.log(error);
-      dispatch(signOutFailure(error.message));
+      dispatch(signOutFailure(data.message));
     }
   }
   return (
