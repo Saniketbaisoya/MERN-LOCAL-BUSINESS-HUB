@@ -119,7 +119,7 @@ export default function Profile() {
           id='userName'  
           placeholder='username' 
           className=' text-slate-500 bg-transparent focus:outline-slate-700  focus:bg-slate-300 border p-3 rounded-lg shadow-2xl'
-          defaultValue={currentUser?.data?.userName}
+          defaultValue={currentUser.data.userName}
           />
         <input 
           onChange={handleChange}
@@ -127,7 +127,7 @@ export default function Profile() {
           id='email'  
           placeholder='email' 
           className=' text-slate-500 bg-transparent focus:outline-slate-700 focus:bg-slate-300 border p-3 rounded-lg shadow-2xl'
-          defaultValue={currentUser?.data?.email}
+          defaultValue={currentUser.data.email}
         />
         <input
           onChange={handleChange}
