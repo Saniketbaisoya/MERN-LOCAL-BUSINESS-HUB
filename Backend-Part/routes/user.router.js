@@ -7,15 +7,15 @@ const router = express.Router();
 /**
  * http://localhost:9000/api/user/test
  */
-router.get('/test',userController);
+router.get('/test', userController);
 
 /**
  * http://localhost:9000/api/user/update/:id
  */
-router.patch('/update/:id' ,isLoggedIn ,updateController);
+router.patch('/update/:id', isLoggedIn, updateController);
 
 /**
  * http://localhost:9000/api/user/delete/:id
  */
-router.delete('/delete/:id' ,isLoggedIn ,deleteController);
+router.delete('/delete/:id', isLoggedIn, deleteController);
 export default router;

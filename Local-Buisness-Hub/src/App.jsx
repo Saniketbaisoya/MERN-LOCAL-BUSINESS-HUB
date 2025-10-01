@@ -16,6 +16,10 @@ export default function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signIn' element={<SignIn />}/>
         <Route path='signUp' element={<SignUp />}/>
+        {/* 
+        * Now PrivateRoute mai hmne do route define kiye hue hai i.e -> Profile and createList 
+        * mtlb yeah dono route Private route ke childrean hogye
+        */}
         <Route  element={<PrivateRoute />}>
         <Route path='profile' element={<Profile />}/>
         <Route path='/createlist' element={<Create_Listing />}/>

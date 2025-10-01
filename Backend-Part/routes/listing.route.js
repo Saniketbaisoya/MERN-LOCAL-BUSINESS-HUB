@@ -7,5 +7,5 @@ const router = express.Router();
 /**
  * http://localhost:9000/api/create
  */
-router.post('/create',isLoggedIn,createListing_Controller);
+router.post('/create', isLoggedIn, createListing_Controller);
 export default router;
