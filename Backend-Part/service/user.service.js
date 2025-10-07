@@ -1,6 +1,7 @@
 import User from "../schema/user.model.js";
 
 async function updateService(id,data) {
+    // so here the {new : true} is important because if don't then we don't get the updated data in return we get the previous data....
     const response = await User.findByIdAndUpdate(id,data,{new : true});
     return response;
 }
