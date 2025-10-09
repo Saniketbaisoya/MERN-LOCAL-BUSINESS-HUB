@@ -236,6 +236,8 @@ export default function Profile() {
       <p className={`${update ? "bg-green-50 border border-green-400 text-green-700 uppercase text-center px-5 py-3 rounded-xl shadow-md text-base font-semibold ": ""}`}>
         {update ? "SuccessFully Updated the data" : ""}
       </p>
+
+      {/* Now abb yha se hmm voh sari lists ko list krege jo login user ke through bnai gyi hai....*/}
       <button 
         onClick={handleShowListings}
         className='text-lg text-green-700 font-semibold hover:opacity-75 hover:underline w-full'
