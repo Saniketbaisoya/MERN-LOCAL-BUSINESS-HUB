@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.use('/api/user',userRouter);
 app.use('/api',authRouter);
-app.use('/api',listingRouter);
+app.use('/api/listing',listingRouter);
 app.listen(PORT,async ()=>{
     await connectDb();
     console.log(`Server is started at ${PORT}`);
