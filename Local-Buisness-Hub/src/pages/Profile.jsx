@@ -19,7 +19,9 @@ export default function Profile() {
   const [file,setFile] = useState(undefined);
   const [filePer,setFilePer] = useState(0);
   const [fileUploadError,setFileUploadError] = useState(false);
-  
+  const [showListingErrors,setshowListingErrors] = useState(null);
+  const [userListings, setuserListings] = useState(null);
+
   console.log(filePer);
   useEffect(()=>{
     if(file){
@@ -136,6 +138,25 @@ export default function Profile() {
     }
   }
 
+  const handleShowListings = async (e)=> {
+    e.preventDefault();
+    try {
+      const response = await fetch(`/api/user/listings/${currentUser.data._id}`,{
+        method : 'GET',
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+      });
+      const data = await response.json();
+      if(data.success==false){
+        setshowListingErrors(data.message);
+      }
+      console.log(data.data);
+      setuserListings(data.data);
+    }catch (error) {
+      setshowListingErrors(error.message);
+    }
+  }
   // firebase storage rules apply kiye gye hain....
   // allow read;
   // allow write : if 
@@ -215,6 +236,51 @@ export default function Profile() {
       <p className={`${update ? "bg-green-50 border border-green-400 text-green-700 uppercase text-center px-5 py-3 rounded-xl shadow-md text-base font-semibold ": ""}`}>
         {update ? "SuccessFully Updated the data" : ""}
       </p>
+      <button 
+        onClick={handleShowListings}
+        className='text-lg text-green-700 font-semibold hover:opacity-75 hover:underline w-full'
+      >
+      Show Listings
+      </button>
+      {userListings && userListings.length > 0 && (
+        <div className='flex flex-col gap-4'>
+          <h1 className=' text-2xl text-center mt-7  font-semibold'>Your Listings</h1>
+
+          {userListings.map((listings)=> (
+            <div 
+              key={listings._id}
+              className='border rounded-lg p-3 flex justify-between items-center gap-4'
+            >
+              <Link to={`/listing/${listings._id}`}>
+                <img 
+                  src={listings.imageUrls[0]} 
+                  alt='listing-cover'
+                  className="w-20 h-20  object-cover  border border-gray-200 hover:scale-105 transition-transform duration-300"
+                />
+              </Link>
+              <Link 
+                className='text-slate-700 font-semibold  hover:underline truncate flex-1'
+                to={`/listing/${listings._id}`}
+              >
+                <p >{listings.name}</p>
+              </Link>
+
+              <div className='flex flex-col item-center'>
+                <button
+                  className='text-red-700 uppercase hover:opacity-75 hover:underline'
+                >
+                Delete
+                </button>
+                <Link>
+                  <button className='text-green-700 uppercase hover:opacity-75 hover:underline'>Edit</button>
+                </Link>
+              </div>
+            </div>
+          ))}
+
+        </div>
+        
+      )}
     </div>
     
   )
