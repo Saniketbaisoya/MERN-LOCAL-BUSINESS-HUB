@@ -1,6 +1,7 @@
 import express from 'express'
-import  { userController, updateController, deleteController } from '../controllers/user.controller.js';
+import  { userController, updateController, deleteController, getAllListings_Controller } from '../controllers/user.controller.js';
 import isLoggedIn from '../validation/authValidation.js';
+import userMiddleware from '../middlewares/user.middlewares.js';
 
 const router = express.Router();
 
@@ -18,4 +19,10 @@ router.patch('/update/:id', isLoggedIn, updateController);
  * http://localhost:9000/api/user/delete/:id
  */
 router.delete('/delete/:id', isLoggedIn, deleteController);
+
+/**
+ * http://localhost:9000/api/user/listings/:id
+ */
+router.get('/listings/:id', isLoggedIn, getAllListings_Controller);
+
 export default router;

@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs'
 import AppError from "../utils/AppError.js";
 import SuccessResponse from "../utils/successResponse.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
-import  { deleteService, updateService } from "../service/user.service.js";
+import  { deleteService, getAllListings, updateService } from "../service/user.service.js";
 import User from "../schema/user.model.js";
 
 async function userController(req,res,next) {
@@ -63,4 +63,20 @@ async function deleteController(req,res) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 }
-export  {userController, updateController, deleteController};
+
+async function getAllListings_Controller(req,res) {
+    if(req.user.id !== req.params.id){
+        throw new AppError("You can ", StatusCodes.BAD_REQUEST);
+    }
+    try {
+        const response = await getAllListings(req.params.id);
+        SuccessResponse.data = response;
+        SuccessResponse.message = "SuccessFully fetched all lisitings";
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    }catch(error) {
+        ErrorResponse.message = error.message;
+        ErrorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    }
+}
+export  {userController, updateController, deleteController, getAllListings_Controller};

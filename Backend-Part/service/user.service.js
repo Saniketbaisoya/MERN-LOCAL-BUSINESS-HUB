@@ -1,3 +1,4 @@
+import List from "../schema/listing.model.js";
 import User from "../schema/user.model.js";
 
 async function updateService(id,data) {
@@ -11,4 +12,8 @@ async function deleteService(id) {
     return response;
 }
 
-export  {updateService, deleteService};
+async function getAllListings(id) {
+    const response = await List.find({useRef : id});
+    return response;
+}
+export  {updateService, deleteService, getAllListings};
