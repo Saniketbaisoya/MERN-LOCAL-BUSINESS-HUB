@@ -9,4 +9,9 @@ async function deleteList(id) {
     const response = await List.findByIdAndDelete(id);
     return response;
 }
-export {ListService, deleteList};
+
+async function updateList(id,data) {
+    const response = await List.findByIdAndUpdate(id,data,{new : true});
+    return response;
+}
+export {ListService, deleteList, updateList};
