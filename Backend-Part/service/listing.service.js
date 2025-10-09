@@ -5,4 +5,8 @@ async function ListService(data) {
     return list;
 }
 
-export {ListService};
+async function deleteList(id) {
+    const response = await List.findByIdAndDelete(id);
+    return response;
+}
+export {ListService, deleteList};

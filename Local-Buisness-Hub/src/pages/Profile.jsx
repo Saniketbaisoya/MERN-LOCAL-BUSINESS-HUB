@@ -157,6 +157,22 @@ export default function Profile() {
       setshowListingErrors(error.message);
     }
   }
+
+  const handleRemoveList = async (listingId)=> {
+    try {
+      const response = await fetch(`/api/listing/delete/${listingId}`,{
+        method : 'DELETE',
+      });
+      const data = await response.json();
+      if(data.success === false){
+        console.log(data.message);
+        return;
+      }
+      setuserListings((prev)=> prev.filter((listing)=> listing._id !== listingId));
+    }catch (error) {
+      console.log(error.message);
+    }
+  };
   // firebase storage rules apply kiye gye hain....
   // allow read;
   // allow write : if 
@@ -270,6 +286,7 @@ export default function Profile() {
               <div className='flex flex-col item-center'>
                 <button
                   className='text-red-700 uppercase hover:opacity-75 hover:underline'
+                  onClick={()=> handleRemoveList(listings._id)}
                 >
                 Delete
                 </button>
