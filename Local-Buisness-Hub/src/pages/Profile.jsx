@@ -7,6 +7,7 @@ import { data, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { app } from '../../firebase.js';
 import {getStorage, uploadBytesResumable, ref, getDownloadURL} from 'firebase/storage'
+
 export default function Profile() {
   const {currentUser, loading, error} = useSelector((state) => state.user);
   const fileRef = useRef(null);
@@ -155,7 +156,7 @@ export default function Profile() {
         <img 
           onClick={()=> fileRef.current.click()}
           className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2' 
-          src={ formData.avatar || currentUser.data.avatar } 
+          src={ formData?.avatar || currentUser.data.avatar } 
           alt='profile'
         />
         {/* Now abb yha pr filePer ko show krege */}
