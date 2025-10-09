@@ -150,7 +150,7 @@ export default function Profile() {
           onChange={(e)=> setFile(e.target.files[0]) } 
           type='file' 
           ref={fileRef} 
-          hidden 
+          hidden
           accept='image/*'
         />
         <img 
@@ -199,7 +199,7 @@ export default function Profile() {
         </button>
         <Link 
           to={'/createlist'} className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-9'>
-        Create Listing
+          Create Listing
         </Link>
       </form>
       <div className='flex justify-between'>
