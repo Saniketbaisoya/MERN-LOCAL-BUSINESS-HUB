@@ -66,7 +66,7 @@ async function deleteController(req,res) {
 
 async function getAllListings_Controller(req,res) {
     if(req.user.id !== req.params.id){
-        throw new AppError("You can ", StatusCodes.BAD_REQUEST);
+        throw new AppError("You can only view your own listings", StatusCodes.BAD_REQUEST);
     }
     try {
         const response = await getAllListings(req.params.id);
