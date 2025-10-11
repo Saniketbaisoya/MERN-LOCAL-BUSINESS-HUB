@@ -21,7 +21,7 @@ router.patch('/update/:id', isLoggedIn, updateController);
 router.delete('/delete/:id', isLoggedIn, deleteController);
 
 /**
- * http://localhost:9000/api/user/listings/:id
+ * http://localhost:9000/api/user/listings/:id 
  */
 router.get('/listings/:id', isLoggedIn, getAllListings_Controller);
 
