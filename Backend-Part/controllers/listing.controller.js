@@ -61,5 +61,20 @@ async function updateList_Controller(req,res) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 };
+async function getListing_controller(req,res) {
+    try {
+        const response = await List.findById(req.params.id);
+        if(!response){
+            return res.status(StatusCodes.BAD_REQUEST).json("List not Found");
+        }
+        SuccessResponse.data = response;
+        SuccessResponse.message = "List has been fetch SuccessFully";
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.data = error;
+        ErrorResponse.message = error.message;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    }
+};
 
-export {createListing_Controller, deleteList_Controller, updateList_Controller};
+export {createListing_Controller, deleteList_Controller, updateList_Controller, getListing_controller};

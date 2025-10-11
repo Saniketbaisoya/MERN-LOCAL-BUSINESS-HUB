@@ -1,6 +1,6 @@
 import express from 'express'
 import isLoggedIn from '../validation/authValidation.js';
-import { createListing_Controller, deleteList_Controller, updateList_Controller } from '../controllers/listing.controller.js';
+import { createListing_Controller, deleteList_Controller, updateList_Controller, getListing_controller } from '../controllers/listing.controller.js';
 
 const router = express.Router();
 
@@ -19,4 +19,9 @@ router.delete('/delete/:id', isLoggedIn, deleteList_Controller);
  * http://localhost:9000/api/listing/updateList/:id
  */
 router.patch('/updateList/:id', isLoggedIn, updateList_Controller);
+
+/**
+ * http://localhost:9000/api/listing/get/:id
+ */
+router.get('/get/:id',getListing_controller);
 export default router;
