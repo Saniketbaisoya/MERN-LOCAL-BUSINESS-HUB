@@ -9,6 +9,7 @@ import Header from './components/header'
 import PrivateRoute from './components/PrivateRoute'
 import Create_Listing from './pages/Create_Listing'
 import UpdateList from './pages/UpdateList'
+import Listings from './pages/Listings'
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ export default function App() {
         * Now PrivateRoute mai hmne do route define kiye hue hai i.e -> Profile and createList 
         * mtlb yeah dono route Private route ke childrean hogye
         */}
+        <Route  path='/listing/:listingId' element={<Listings />}/>
         <Route  element={<PrivateRoute />}>
         <Route path='profile' element={<Profile />}/>
         <Route path='/createlist' element={<Create_Listing />}/>
