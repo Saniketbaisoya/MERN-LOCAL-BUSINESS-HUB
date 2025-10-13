@@ -254,7 +254,7 @@ export default function Profile() {
       </p>
 
       {/* Now abb yha se hmm voh sari lists ko list krege jo login user ke through bnai gyi hai....*/}
-      <button 
+      <button
         onClick={handleShowListings}
         className='text-lg text-green-700 font-semibold hover:opacity-75 hover:underline w-full'
       >

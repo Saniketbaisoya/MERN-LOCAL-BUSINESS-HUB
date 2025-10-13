@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import Contact from '../components/Contact';
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
 // isliye hmme usse alg se define krna hoga tb voh navigation ke <> bars dikhai dege...
 SwiperCore.use([Navigation]);
@@ -14,6 +16,8 @@ export default function Listings() {
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(false);
     const params = useParams();
+    const {currentUser} = useSelector((state)=> state.user);
+    const [contact, setContact] = useState(false);
 
     useEffect(()=> {
         const fetchLising = async ()=> {
@@ -23,7 +27,6 @@ export default function Listings() {
                 method : 'GET',
             });
             const data = await response.json();
-            console.log(data.data);
             if(data.success == false){
                 setError(true);
                 setLoading(false);
@@ -113,6 +116,16 @@ export default function Listings() {
                             {listing.furnished ? 'Furnished' : 'Unfurnished'}
                         </li>
                     </ul>
+                    {/*  */}
+                    {currentUser && currentUser.data._id != listing.useRef && !contact && (
+                        <button
+                            onClick={()=> setContact(true)}
+                            className=' bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+                        >Contact Owner</button>
+                    )}
+                    <span className=' mt-5 '>{contact && <Contact listing={listing}/>}</span>
+                    
+
                 </div>
             </div>
             

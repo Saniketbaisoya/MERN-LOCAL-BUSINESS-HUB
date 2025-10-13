@@ -16,4 +16,9 @@ async function getAllListings(id) {
     const response = await List.find({useRef : id});
     return response;
 }
-export  {updateService, deleteService, getAllListings};
+
+async function getUser(id) {
+    const response = await User.findById(id);
+    return response;
+}
+export  {updateService, deleteService, getAllListings, getUser};

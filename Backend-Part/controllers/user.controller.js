@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs'
 import AppError from "../utils/AppError.js";
 import SuccessResponse from "../utils/successResponse.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
-import  { deleteService, getAllListings, updateService } from "../service/user.service.js";
+import  { deleteService, getAllListings, getUser, updateService } from "../service/user.service.js";
 import User from "../schema/user.model.js";
 
 async function userController(req,res,next) {
@@ -79,4 +79,18 @@ async function getAllListings_Controller(req,res) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 }
-export  {userController, updateController, deleteController, getAllListings_Controller};
+
+async function getUser_Controller(req,res) {
+    try {
+        const response = await getUser(req.params.id);
+        const {password : pass, ...rest} = response._doc
+        SuccessResponse.data = rest;
+        SuccessResponse.message = "SuccessFully fetch the user";
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    }catch(error) {
+        ErrorResponse.message = error.message;
+        ErrorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    }
+}
+export  {userController, updateController, deleteController, getAllListings_Controller, getUser_Controller};

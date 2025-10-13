@@ -1,5 +1,5 @@
 import express from 'express'
-import  { userController, updateController, deleteController, getAllListings_Controller } from '../controllers/user.controller.js';
+import  { userController, updateController, deleteController, getAllListings_Controller, getUser_Controller } from '../controllers/user.controller.js';
 import isLoggedIn from '../validation/authValidation.js';
 import userMiddleware from '../middlewares/user.middlewares.js';
 
@@ -24,5 +24,10 @@ router.delete('/delete/:id', isLoggedIn, deleteController);
  * http://localhost:9000/api/user/listings/:id 
  */
 router.get('/listings/:id', isLoggedIn, getAllListings_Controller);
+
+/**
+ * http://localhost:9000/api/user/:id 
+ */
+router.get('/:id', isLoggedIn, getUser_Controller)
 
 export default router;
