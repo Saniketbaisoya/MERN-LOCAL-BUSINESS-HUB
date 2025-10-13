@@ -35,7 +35,7 @@ export default function Contact({listing}) {
       {owner && (
         <div className='flex flex-col gap-2'>
             <p className=' bg-red-800 text-white p-3 rounded-lg text-center'>
-                Contact <span className=' font-semibold'>{owner.userName}</span>{' '}for{' '}
+                Contact <span className=' font-semibold uppercase'>{owner.userName}</span>{' '}for{' '}
                 <span className=' font-semibold'>{listing.name.toLowerCase()}</span>
             </p>
             <textarea
