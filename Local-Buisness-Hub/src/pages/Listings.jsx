@@ -90,7 +90,7 @@ export default function Listings() {
                         </p>
                         {listing.offer && (
                             <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                                ₹{' '}{(+listing.regularPrice - +listing.discountedPrice).toLocaleString('en-US')}
+                                ₹{' '}{(+listing.regularPrice - +listing.discountedPrice).toLocaleString('en-US')} Discount
                             </p>
                         )}
                     </div>
