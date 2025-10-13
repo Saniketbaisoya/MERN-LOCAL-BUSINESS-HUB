@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
+import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking } from 'react-icons/fa';
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
 // isliye hmme usse alg se define krna hoga tb voh navigation ke <> bars dikhai dege...
 SwiperCore.use([Navigation]);
@@ -44,7 +45,13 @@ export default function Listings() {
     <main>
         {loading && <p className=' text-center my-7 text-2xl'>Loading...</p>}
         {error && (<p className=' text-center my-7 text-2xl'>Something went wrong</p>)} 
+        {/*
+            * Now agr listing mai data hai and loading is false and error is false then abb show krege puri listings ko in the listings page
+        */}
+        
         {listing && !loading && !error && (
+            // Now sbse phele hmm show krege sari images ko and we need to move another image with slide 
+            // so slide krege swiper ko import krege...
             <div>
                 <Swiper navigation={true}>
                     {listing.imageUrls.map((url)=> (
@@ -59,7 +66,56 @@ export default function Listings() {
                         </SwiperSlide>
                     ))}
                 </Swiper>
+                {/* Now abb hmm baki listings ki details ko show krege.... */}
+                <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
+                    <p className='text-2xl font-semibold'>
+                        {listing.name} -  ₹{' '}
+                        {
+                            listing.offer ? 
+                            listing.discountedPrice.toLocaleString('en-US') : 
+                            listing.regularPrice.toLocaleString('en-US')
+                        }
+                        {listing.type === 'rent' && ' / month'}
+                    </p>
+                    <p className='flex items-center mt-2 gap-2 text-slate-600  text-sm'>
+                        <FaMapMarkerAlt className=' text-green-700'/>
+                        {listing.address}
+                    </p>
+                    <div className='flex gap-4'>
+                        <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                            {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
+                        </p>
+                        {listing.offer && (
+                            <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                                ₹{' '}{(+listing.regularPrice - +listing.discountedPrice).toLocaleString('en-US')}
+                            </p>
+                        )}
+                    </div>
+                    <p className=' text-slate-800'>
+                        <span className=' font-semibold text-black'>Description - {' '}</span>
+                        {listing.description}
+                    </p>
+                    <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
+                        <li className='flex items-center gap-1 whitespace-nowrap '>
+                            <FaBed className='text-lg'/>
+                            {listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : `${listing.bedrooms} Bed`}
+                        </li>
+                        <li className='flex items-center gap-1 whitespace-nowrap '>
+                            <FaBath className='text-lg'/>
+                            {listing.bathrooms > 1 ? `${listing.bathrooms} Baths` : `${listing.bathrooms} Bath`}
+                        </li>
+                        <li className='flex items-center gap-1 whitespace-nowrap '>
+                            <FaParking className='text-lg'/>
+                            {listing.parking ? 'Parking Spot' : 'No Parking'}
+                        </li>
+                        <li className='flex items-center gap-1 whitespace-nowrap '>
+                            <FaChair className='text-lg'/>
+                            {listing.furnished ? 'Furnished' : 'Unfurnished'}
+                        </li>
+                    </ul>
+                </div>
             </div>
+            
         )}
     </main>
   )
