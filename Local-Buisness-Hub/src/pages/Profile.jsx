@@ -22,7 +22,6 @@ export default function Profile() {
   const [showListingErrors,setshowListingErrors] = useState(null);
   const [userListings, setuserListings] = useState(null);
 
-  console.log(filePer);
   useEffect(()=>{
     if(file){
       handleFileUpload(file);
