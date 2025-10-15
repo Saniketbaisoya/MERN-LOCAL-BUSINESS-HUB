@@ -98,7 +98,9 @@ export default function Search() {
         </form>
       </div>
       {/* This div for the listings results */}
-      <div></div>
+      <div>
+        <h1 className=' text-3xl font-semibold border-b p-3 text-slate-700'>Listing results:</h1>
+      </div>
     </div>
   )
 }
