@@ -91,7 +91,7 @@ async function getAllListing_controller(req,res) {
          * Now offer which is query params uski byDefault value ya toh undefined hogi ya phr false hogi,
          * Now undefined ke case mai dono value ho skti hai ya toh true ya false , but if the value of offer is false then it is false or if true then true
          * That means offer value true ya false mai se hi koi hogi and if you see here in case of undefined the offer value would be dynamically randomly alloted that means the offer as a variable should be the let not const
-         * Isliye yha offer =  {$in : [true,false]} $in ko use kiya hai, because $in yani mongoDB ki query and voh allot krega....
+         * Isliye yha offer =  {$in : [true,false]} $in ko use kiya hai, because $in yani mongoDB ki query and voh allot krega ya toh true ya false....
         */
         let offer = req.query.offer;
          if(offer === undefined || offer === 'false'){

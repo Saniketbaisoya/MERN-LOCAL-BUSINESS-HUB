@@ -27,7 +27,7 @@ async function updateList(id,data) {
 
 /**
  * Toh abb hmne yha sari values ko parameters ki form mai le aye then after using the find query we get mongoose query object and then on that object we will implemnt the sort, skip or limit functions 
- * Then await it means execute then it will return the array document means object....
+ * Then await it means execute then, it will return the array document means object....
  */
 async function getAllLists({ searchTerm, sort, order, limit, startIndex, offer, furnished, parking, type }) {
     const response = await List.find({
