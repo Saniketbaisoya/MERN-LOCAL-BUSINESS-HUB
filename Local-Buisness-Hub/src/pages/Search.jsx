@@ -99,7 +99,7 @@ export default function Search() {
       </div>
       {/* This div for the listings results */}
       <div>
-        <h1 className=' text-3xl font-semibold border-b p-3 text-slate-700'>Listing results:</h1>
+        <h1 className=' text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Listing results:</h1>
       </div>
     </div>
   )
