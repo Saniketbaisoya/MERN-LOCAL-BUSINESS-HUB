@@ -20,7 +20,7 @@ export default function Search() {
 
     useEffect(()=> {
         const urlParams = new URLSearchParams(location.search);
-        const searchTermFromUrl = urlParams.get('seacrhTerm');
+        const searchTermFromUrl = urlParams.get('searchTerm');
         const typeFromUrl = urlParams.get('type');
         const parkingFromUrl = urlParams.get('parking');
         const furnishedFromUrl = urlParams.get('furnished');
@@ -43,9 +43,8 @@ export default function Search() {
 
         const fetchListings = async () => {
             const searchQuery = urlParams.toString();
-            const response = await fetch(`/api/listing/get${searchQuery}`,{
-                method : 'GET'
-            });
+            const response = await fetch(`/api/listing/get?${searchQuery}`
+            );
             const data = await response.json();
             if(data.success == false){
                 console.log(data.message);
