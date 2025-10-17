@@ -6,6 +6,8 @@ export default function Search() {
     const navigate = useNavigate();
     const [listings,setListings] = useState([]);
     const [loading,setLoading] = useState(false);
+    const [showMore,setShowMore] = useState(false);
+
     const [sideBarData,setSideBarData] = useState({
         searchTerm : '',
         type : 'all',
@@ -16,9 +18,6 @@ export default function Search() {
         order : 'desc'
 
     });
-    
-    console.log(listings);
-
 
     useEffect(()=> {
         const urlParams = new URLSearchParams(location.search);
@@ -45,11 +44,17 @@ export default function Search() {
 
         const fetchListings = async () => {
             setLoading(true);
+            setShowMore(false);
             const searchQuery = urlParams.toString();
             const response = await fetch(`/api/listing/get?${searchQuery}`,{
                 method : 'GET'
             });
             const data = await response.json();
+            if(data.data.length > 8){
+                setShowMore(true);
+            }else{
+                setShowMore(false);
+            }
             if(data.success == false){
                 console.log(data.message);
             }
@@ -93,6 +98,21 @@ export default function Search() {
         navigate(`/search?${searchQuery}`);
     }
 
+    const onShowMoreClick = async ()=> {
+        const numberOfListings = listings.length;
+        const startIndex = numberOfListings;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex',startIndex);
+        const searchQuery = urlParams.toString();
+        const response = await fetch(`/api/listing/get?${searchQuery}`,{
+            method : 'GET'
+        });
+        const data = await response.json();
+        if(data.data.length < 9){
+            setShowMore(false);
+        }
+        setListings([...listings, ...data.data]);
+    };
     return (
         <div className='flex flex-col md:flex-row'>
             {/* Now abb yha seacrhterm or listings results ayege.... */}
@@ -222,6 +242,9 @@ export default function Search() {
                         listings.map((listing)=> (
                             <ListingItem key={listing._id} listings={listing}/>
                         ))
+                    }
+                    {showMore && 
+                        (<button onClick={onShowMoreClick} className='text-green-700 hover:underline p-7 text-center w-full'>Show More</button>)
                     }
                 </div>
             </div>

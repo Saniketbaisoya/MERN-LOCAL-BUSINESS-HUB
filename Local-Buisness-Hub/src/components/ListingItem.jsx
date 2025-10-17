@@ -8,7 +8,7 @@ export default function ListingItem({listings}) {
         <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[310px]'>
             <Link to={`/listing/${listings._id}`}>
                 <img 
-                    src={listings.imageUrls[4] || 'https://images.pexels.com/photos/101808/pexels-photo-101808.jpeg'}
+                    src={listings.imageUrls[0] || 'https://images.pexels.com/photos/101808/pexels-photo-101808.jpeg'}
                     alt='listing-cover'
                     className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'
                 />
