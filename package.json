@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon Backend-Part/index.js",
-    "dev": "node Backend-Part/index.js"
+    "dev": "node Backend-Part/index.js",
+    "build": "npm install && npm install --prefix Local-Buisness-Hub && npm run build --prefix Local-Buisness-Hub"
   },
   "repository": {
     "type": "git",
