@@ -19,7 +19,7 @@ app.use('/api/listing',listingRouter);
 
 app.use(express.static(path.join(__dirname, '/Local-Buisness-Hub/dist')));
 
-app.get('*',(req,res)=> {
+app.get('/*any',(req,res)=> {
     res.sendFile(path.join(__dirname, 'Local-Buisness-Hub', 'dist', 'index.html'))
 })
 app.listen(PORT,async ()=>{
