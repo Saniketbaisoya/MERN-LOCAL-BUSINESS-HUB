@@ -102,11 +102,11 @@ export default function Home() {
       <div className=' mt-4'>
         {offerListings && offerListings.length > 0 && (
           <div>
-            <div className=' my-3 ml-10'>
+            <div className=' my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent Offers</h2>
               <Link className='text-sm text-blue-800 hover:underline ' to={`/search?offer=true`}>Show more offers</Link>
             </div>
-            <div className='flex flex-wrap gap-6 ml-10'>
+            <div className='flex flex-wrap gap-6'>
               {offerListings.map((listing)=>(
                 <ListingItem listings={listing} key={listing._id}/>
               ))}
@@ -116,11 +116,11 @@ export default function Home() {
         )}
         {rentListings && rentListings.length > 0 && (
           <div>
-            <div className=' my-7 ml-10 '>
+            <div className=' my-7'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent places for rents</h2>
               <Link className='text-sm text-blue-800 hover:underline ' to={`/search?type=rent`}>Show more places for Rents</Link>
             </div>
-            <div className='flex flex-wrap gap-6 ml-10'>
+            <div className='flex flex-wrap gap-6'>
               {rentListings.map((listing)=>(
                 <ListingItem listings={listing} key={listing._id}/>
               ))}
@@ -129,11 +129,11 @@ export default function Home() {
         )}
         {saleListings && saleListings.length > 0 && (
           <div>
-            <div className=' my-7 ml-10 '>
+            <div className=' my-7'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent places for sales -</h2>
               <Link className='text-sm text-blue-800 hover:underline ' to={`/search?type=sale`}>Show more places for Sales</Link>
             </div>
-            <div className='flex flex-wrap gap-6 ml-10'>
+            <div className='flex flex-wrap gap-6'>
               {saleListings.map((listing)=>(
                 <ListingItem listings={listing} key={listing._id}/>
               ))}
