@@ -122,7 +122,7 @@ export default function Search() {
 
                     {/* Now isme bhi multiple divs hoge for Search Term, for type, for amenities, for sort and for seacrh button */}
                     <div className=' flex items-center gap-2'>
-                        <label className=' whitespace-nowrap rounded-lg p-1.5 text-white bg-slate-500'>Seacrh Term:</label>
+                        <label className=' whitespace-nowrap rounded-lg p-1.5 text-white bg-slate-500'>Search Term:</label>
                         <input 
                             type='text'
                             id='searchTerm'
