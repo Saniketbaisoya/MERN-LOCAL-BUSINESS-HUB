@@ -401,8 +401,7 @@ export default function Create_Listing() {
           <button disabled = {loading || uploading} className='p-3 font-semibold bg-slate-700 text-white rounded-lg uppercase hover:opacity-95'>{loading ? <p>Creating...</p>: 'Create List'}</button>
           {error ? <p className=" text-red-700 text-sm">{error}</p> : ""}
         </div> 
-          
-        
+
       </form>
     </main>
   )
