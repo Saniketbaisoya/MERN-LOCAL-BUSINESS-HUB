@@ -76,9 +76,8 @@ export default function Listings() {
                                 }}
                             >
                                 <div className='flex justify-end p-2 relative'>
-
                                     <button 
-                                        className=' flex items-center gap-1  p-1.5 text-sm rounded-lg bg-slate-300 uppercase hover:opacity-80 shadow-md hover:shadow-lg transition-shadow text-blue-400 '
+                                        className=' flex items-center gap-1  p-1.5 text-sm rounded-lg bg-slate-300 uppercase hover:opacity-80 shadow-md hover:shadow-lg transition-shadow text-slate-700 '
                                         onClick={handleShare}
                                     >
                                         <FiShare2  size={20}/>
