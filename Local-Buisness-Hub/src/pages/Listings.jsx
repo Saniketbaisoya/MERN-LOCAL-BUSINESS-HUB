@@ -8,6 +8,7 @@ import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking } from 'react-icons/f
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
 import { FiShare2 } from "react-icons/fi";
+import GoogleMapComponent from '../components/googleMapComponent';
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
 // isliye hmme usse alg se define krna hoga tb voh navigation ke <> bars dikhai dege...
 SwiperCore.use([Navigation]);
@@ -81,7 +82,7 @@ export default function Listings() {
                                         onClick={handleShare}
                                     >
                                         <FiShare2  size={20}/>
-                                        <span>Share</span>
+                                        <span className=' font-semibold'>Share</span>
                                     </button>
                                     {copied && (
                                         <div className='absolute top-12 right-3 bg-gray-800 text-white text-sm px-3 py-1 rounded-md shadow'>
@@ -141,6 +142,9 @@ export default function Listings() {
                             {listing.furnished ? 'Furnished' : 'Unfurnished'}
                         </li>
                     </ul>
+                    {/*  */}
+                    <GoogleMapComponent  address={listing.address}/>
+
                     {/*  */}
                     {currentUser && currentUser.data._id != listing.useRef && !contact && (
                         <button
