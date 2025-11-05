@@ -8,7 +8,11 @@ async function updateService(id,data) {
 }
 
 async function deleteService(id) {
+
     const response = await User.findByIdAndDelete(id);
+    // here we are deleting the all the listings which will be belonging to the user which is deleted by their own id,
+    // so we compare the userId in all listings of userRef to delete all listings....
+    await List.deleteMany({useRef : id});
     return response;
 }
 

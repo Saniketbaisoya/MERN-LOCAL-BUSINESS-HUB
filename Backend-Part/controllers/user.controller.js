@@ -49,14 +49,14 @@ async function updateController(req,res) {
 
 async function deleteController(req,res) {
     if(req.user.id != req.params.id){
-        ErrorResponse.message = "You can only delete your own account!"
+        ErrorResponse.message = "You can only delete your own account!!"
         return res.status(StatusCodes.UNAUTHORIZED).json(ErrorResponse); 
     }
     try {
         await deleteService(req.params.id);
 
         res.clearCookie('access-token');
-        res.status(StatusCodes.OK).json("Successfully deleted the account !!");
+        res.status(StatusCodes.OK).json("Successfully deleted the account and Data!!");
     } catch (error) {
         ErrorResponse.message = error.message;
         ErrorResponse.error = error;
