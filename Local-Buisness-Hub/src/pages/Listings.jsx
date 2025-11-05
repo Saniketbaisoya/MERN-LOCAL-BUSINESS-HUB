@@ -7,6 +7,7 @@ import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
+import { FiShare2 } from "react-icons/fi";
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
 // isliye hmme usse alg se define krna hoga tb voh navigation ke <> bars dikhai dege...
 SwiperCore.use([Navigation]);
@@ -18,7 +19,8 @@ export default function Listings() {
     const params = useParams();
     const {currentUser} = useSelector((state)=> state.user);
     const [contact, setContact] = useState(false);
-
+    const [copied,setCopied] = useState(false);
+    console.log(window.location.href);
     useEffect(()=> {
         const fetchLising = async ()=> {
             try {
@@ -44,6 +46,12 @@ export default function Listings() {
         fetchLising();
     },[params.lisitingId])
 
+    const handleShare = async ()=> {
+        const url = window.location.href;
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(()=> setCopied(false),2000);
+    };
   return (
     <main>
         {loading && <p className=' text-center my-7 text-2xl'>Loading...</p>}
@@ -56,6 +64,7 @@ export default function Listings() {
             // Now sbse phele hmm show krege sari images ko and we need to move another image with slide 
             // so slide krege swiper ko import krege...
             <div>
+                
                 <Swiper navigation={true}>
                     {listing.imageUrls.map((url)=> (
                         <SwiperSlide key={url}>
@@ -65,7 +74,24 @@ export default function Listings() {
                                     background: `url(${url}) center no-repeat`,
                                     backgroundSize: 'cover',
                                 }}
-                            ></div>
+                            >
+                                <div className='flex justify-end p-2 relative'>
+
+                                    <button 
+                                        className=' flex items-center gap-1  p-1.5 text-sm rounded-lg bg-slate-300 uppercase hover:opacity-80 shadow-md hover:shadow-lg transition-shadow text-blue-400 '
+                                        onClick={handleShare}
+                                    >
+                                        <FiShare2  size={20}/>
+                                        <span>Share</span>
+                                    </button>
+                                    {copied && (
+                                        <div className='absolute top-12 right-3 bg-gray-800 text-white text-sm px-3 py-1 rounded-md shadow'>
+                                            Link copied !!
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            
                         </SwiperSlide>
                     ))}
                 </Swiper>
