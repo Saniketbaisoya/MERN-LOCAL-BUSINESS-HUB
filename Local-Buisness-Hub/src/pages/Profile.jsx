@@ -253,12 +253,20 @@ export default function Profile() {
       </p>
 
       {/* Now abb yha se hmm voh sari lists ko list krege jo login user ke through bnai gyi hai....*/}
-      <button
-        onClick={handleShowListings}
-        className='text-lg text-green-700 font-semibold hover:opacity-75 hover:underline w-full'
-      >
-      Show Listings
-      </button>
+        <div className='flex justify-between mt-5'>
+          <button
+          onClick={handleShowListings}
+          className='text-green-700 font-semibold hover:underline'
+        >
+          Show Listings
+        </button>
+        <Link 
+          to={`/saved`}
+          className='text-green-700 font-semibold hover:underline py-2'   
+        >
+          <button className=' hover:underline '>Saved Listings</button>
+        </Link>
+        </div>
       {userListings && userListings.length > 0 && (
         <div className='flex flex-col gap-4'>
           <h1 className=' text-2xl text-center mt-7  font-semibold'>Your Listings</h1>

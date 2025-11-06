@@ -11,6 +11,7 @@ import Create_Listing from './pages/Create_Listing'
 import UpdateList from './pages/UpdateList'
 import Listings from './pages/Listings'
 import Search from './pages/Search'
+import Saved from './pages/Saved'
 export default function App() {
   return (
     <BrowserRouter>
@@ -27,7 +28,7 @@ export default function App() {
         <Route  path='/listing/:listingId' element={<Listings />}/>
         <Route  element={<PrivateRoute />}>
         <Route path='/profile' element={<Profile />}/>
-        
+        <Route path='/saved' element={<Saved />} />
         <Route path='/createlist' element={<Create_Listing />}/>
         <Route path='/update-list/:listingId' element={<UpdateList />}/>
         </Route>
