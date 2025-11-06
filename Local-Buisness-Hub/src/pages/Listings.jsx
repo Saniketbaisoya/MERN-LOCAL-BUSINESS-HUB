@@ -8,7 +8,7 @@ import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaSave } from 'react
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
 import { FiShare2 } from "react-icons/fi";
-import GoogleMapComponent from '../components/googleMapComponent';
+import GoogleMapComponent from '../components/GoogleMapComponent.jsx';
 import {deleteDoc, doc, getDoc, setDoc} from 'firebase/firestore';
 import { db } from '../../firebase';
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
