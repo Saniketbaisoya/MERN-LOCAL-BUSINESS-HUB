@@ -9,7 +9,7 @@ async function authenticate(req,res) {
     if(!token){
         // throw new AppError("Unauthorized",StatusCodes.UNAUTHORIZED);
         ErrorResponse.message = "Unauthorized";
-        return res.status(StatusCodes.UNAUTHORIZED).json({authenticated : false});
+        return res.json({authenticated : false});
     }
     try {
         const decode = jwt.verify( token, SECRET_KEY );
