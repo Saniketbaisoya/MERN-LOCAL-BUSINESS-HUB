@@ -8,11 +8,13 @@ import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaSave } from 'react
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
 import { FiShare2 } from "react-icons/fi";
-import GoogleMapComponent from '../components/GoogleMapComponent.jsx';
+
 import {deleteDoc, doc, getDoc, setDoc} from 'firebase/firestore';
 import { db } from '../../firebase';
 import useGatedAccess from '../utilsFrontend/useGatedAccess.js';
+import GoogleMapComponent from '../components/googleMapComponent.jsx';
 import LoginModel from '../components/loginModel.jsx';
+
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
 // isliye hmme usse alg se define krna hoga tb voh navigation ke <> bars dikhai dege...
 SwiperCore.use([Navigation]);
