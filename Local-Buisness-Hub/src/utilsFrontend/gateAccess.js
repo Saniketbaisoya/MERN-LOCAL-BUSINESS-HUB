@@ -20,7 +20,6 @@ export function addViewedListing(listingId){
 
 export function canViewAsGuest(listingId){
     const arr = getViewedList();
-    console.log(arr.length);
     // if user is already viewed, allow
     if(arr.includes(listingId)) return true;
     // if count < MAX_FREE_VIEWS allows and increament
