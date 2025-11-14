@@ -7,26 +7,43 @@ export default function GoogleMapComponent({address, requireAuthForAction}) {
         googleMapsApiKey : import.meta.env.VITE_MAP_JAVASCRIPT_API_KEY,
     });
 
+    // useEffect(()=> {
+    //     const fetchCoordinates = async () => {
+    //         try {
+    //             const res = await fetch(
+    //                 `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+    //                 address
+    //                 )}&key=${import.meta.env.VITE_GEOLOCATION_API_KEY}`
+    //             );
+    //             const data = await res.json();
+    //             console.log(data);
+    //             if(data.results && data.results[0]) {
+    //                 setCoordinates(data.results[0].geometry.location)
+    //             }
+    //         } catch (error) {
+    //             console.log("GeoCoding Failed : ", error);
+    //         }
+    //     };
+    //     if(address) fetchCoordinates();
+    // },[address]);
+    // console.log(coordinates);
+
     useEffect(()=> {
-        const fetchCoordinates = async () => {
-            try {
-                const res = await fetch(
-                    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-                    address
-                    )}&key=${import.meta.env.VITE_GEOLOCATION_API_KEY}`
-                );
-                const data = await res.json();
-                console.log(data);
-                if(data.results && data.results[0]) {
-                    setCoordinates(data.results[0].geometry.location)
-                }
-            } catch (error) {
-                console.log("GeoCoding Failed : ", error);
+        if(!isLoaded || !address) return;
+
+        const geoCoder = new window.google.maps.Geocoder();
+        geoCoder.geocode({ address }, (results, status) => {
+            if(status == 'OK' && results[0]) {
+                const location = results[0].geometry.location;
+                setCoordinates({
+                    lat : location.lat(),
+                    lng : location.lng(),
+                });
+            }else{
+                console.log("GeoCoder faild : ",status);
             }
-        };
-        if(address) fetchCoordinates();
-    },[address]);
-    console.log(coordinates);
+        });
+    },[isLoaded, address]);
 
     if (!isLoaded) return <p>Loading map library...</p>;
     if (!coordinates) return <p>Finding location...</p>;
@@ -38,16 +55,16 @@ export default function GoogleMapComponent({address, requireAuthForAction}) {
             zoom={15}
             mapContainerStyle={{ width: "100%", height: "300px", borderRadius: "12px" }}
         >
-            <Marker  position={coordinates}/>
+            <Marker  position={coordinates} />
         </GoogleMap>
 
         <button
             onClick={()=> 
                 requireAuthForAction(()=> {
                     window.open(
-                    `https://www.google.com/maps/dir/?api=1&destination=${coordinates.lat},${coordinates.lng}`,
-                    "_blank"
-                )
+                        `https://www.google.com/maps/dir/?api=1&destination=${coordinates.lat},${coordinates.lng}`,
+                        "_blank"
+                    );
                 })
                 
             }
