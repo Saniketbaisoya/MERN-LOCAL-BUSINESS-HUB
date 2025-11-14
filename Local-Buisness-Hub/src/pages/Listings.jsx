@@ -12,8 +12,18 @@ import { FiShare2 } from "react-icons/fi";
 import {deleteDoc, doc, getDoc, setDoc} from 'firebase/firestore';
 import { db } from '../../firebase';
 import useGatedAccess from '../utilsFrontend/useGatedAccess.js';
-import GoogleMapComponent from '../components/googleMapComponent.jsx';
-import LoginModel from '../components/loginModel.jsx';
+
+/**
+ * Now when we import the files using .jsx then VS CODE is throws an red line error on importing
+ * This will happen because VS CODE is basically by default enable for the js based importing rules 
+ * And when we importing using .jsx, VS Code tries to validate imports using TypeScript rules even if your project is JS.
+ * So this is a reason TypeScript is much better than javaScript because by default even VS-CODE is using the typeScript rules
+ * So we need to manually create a jsconfig.js file or we can go eslint.config.js then we will add "importing/extensions" : "off",
+ * Now .jsx files is importing....
+ */
+
+import GoogleMapComponent from '../components/GoogleMapComponent.jsx';
+import LoginModel from '../components/LoginModel.jsx';
 
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
 // isliye hmme usse alg se define krna hoga tb voh navigation ke <> bars dikhai dege...
