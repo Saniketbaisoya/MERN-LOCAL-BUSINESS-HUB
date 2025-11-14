@@ -1,6 +1,7 @@
 import express from 'express'
 import authMiddleware from '../middlewares/auth.middleware.js';
 import {google, signIn, signOut, signUp} from '../controllers/auth.controller.js';
+import authenticate from '../validation/authentication.js';
 
 const router = express.Router();
 
@@ -23,6 +24,11 @@ router.post('/googleAuth', google);
  * http://localhost:9000/api/signout
  */
 router.get('/signout', signOut);
+
+/**
+ * http://localhost:9000/api/check
+ */
+router.get('/check', authenticate);
 
 export default router;
 

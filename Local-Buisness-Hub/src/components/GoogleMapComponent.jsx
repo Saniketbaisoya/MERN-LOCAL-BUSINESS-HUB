@@ -1,7 +1,7 @@
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api'
 import { useEffect, useState } from 'react'
 
-export default function GoogleMapComponent({address}) {
+export default function GoogleMapComponent({address, requireAuthForAction}) {
     const [coordinates, setCoordinates] = useState(null);
     const {isLoaded} = useLoadScript({
         googleMapsApiKey : import.meta.env.VITE_MAP_JAVASCRIPT_API_KEY,
@@ -43,10 +43,13 @@ export default function GoogleMapComponent({address}) {
 
         <button
             onClick={()=> 
-                window.open(
+                requireAuthForAction(()=> {
+                    window.open(
                     `https://www.google.com/maps/dir/?api=1&destination=${coordinates.lat},${coordinates.lng}`,
                     "_blank"
                 )
+                })
+                
             }
             className='mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition'
         >

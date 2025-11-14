@@ -17,6 +17,7 @@ app.use('/api/user',userRouter);
 app.use('/api',authRouter);
 app.use('/api/listing',listingRouter);
 
+
 app.use(express.static(path.join(__dirname, '/Local-Buisness-Hub/dist')));
 
 app.get('/*any',(req,res)=> {

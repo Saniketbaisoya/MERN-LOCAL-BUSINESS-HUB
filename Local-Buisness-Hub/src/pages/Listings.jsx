@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
@@ -11,6 +11,8 @@ import { FiShare2 } from "react-icons/fi";
 import GoogleMapComponent from '../components/GoogleMapComponent.jsx';
 import {deleteDoc, doc, getDoc, setDoc} from 'firebase/firestore';
 import { db } from '../../firebase';
+import useGatedAccess from '../utilsFrontend/useGatedAccess.js';
+import LoginModel from '../components/loginModel.jsx';
 // Now Navigation ko maine swiper/modules se import toh krliya lekin swiper automatically use nhi kr payega
 // isliye hmme usse alg se define krna hoga tb voh navigation ke <> bars dikhai dege...
 SwiperCore.use([Navigation]);
@@ -26,30 +28,49 @@ export default function Listings() {
     const [isSaved,setIsSaved] = useState(false);
     // console.log(window.location.href); // yeah current document ke upr jo url hai unn sbko yeah access krega....
 
+    // login model state for gated access
+    const [loginOpen, setLoginOpen] = useState(false);
+    const openLoginModel = useCallback(() => {
+        setLoginOpen(true);
+    }, []);
+    const closeLoginModel = useCallback(() => {
+        setLoginOpen(false);
+    }, []);
+
+    // use the gated access hook (uses backend cookie check + localStorage guest count)
+    const {
+        isAuthenticated,
+        allowedToView,
+        guestViewCount,
+        requireAuthForAction,
+        MAX_FREE_VIEWS,
+    } = useGatedAccess(params.listingId, {openLoginModel});
+
+
     useEffect(()=> {
         const fetchLising = async ()=> {
             try {
-            setLoading(true);
-            const response = await fetch(`/api/listing/get/${params.listingId}`,{
-                method : 'GET',
-            });
-            const data = await response.json();
-            if(data.success == false){
+                setLoading(true);
+                const response = await fetch(`/api/listing/get/${params.listingId}`,{
+                    method : 'GET',
+                });
+                const data = await response.json();
+                if(data.success == false){
+                    setError(true);
+                    setLoading(false);
+                    return;
+                }
+                setListing(data.data);
+                setLoading(false);
+                setError(false);
+            }catch(error){
                 setError(true);
                 setLoading(false);
-                return;
-            }
-            setListing(data.data);
-            setLoading(false);
-            setError(false);
-        }catch (error) {
-            setError(true);
-            setLoading(false);
+            };
         };
-        }
         
         fetchLising();
-    },[params.lisitingId])
+    },[params.listingId]) // fixing here a type "params.lisitingId" to this "params.listingId"
 
     const handleShare = async ()=> {
         const url = window.location.href;
@@ -72,28 +93,78 @@ export default function Listings() {
 
 
     const handleSave = async ()=> {
-        if(!currentUser){
-            alert('Please login to save the listings!!');
-            return;
-        }
-        const ref = doc(db, "users", currentUser.data._id, "savedListings", params.listingId);
-
-        try {
-            if(isSaved){
-                await deleteDoc(ref);
-                setIsSaved(false);
-            }else {
-                await setDoc(ref, {
-                    listingId : params.listingId,
-                    savedAt : new Date().toISOString()
-                });
-                setIsSaved(true);
+        // requireAuthForAction will open login modal if guest; it runs the callback only when authenticated
+        await requireAuthForAction(async () => {
+            const ref = doc(
+                db,
+                "users",
+                currentUser.data._id,
+                "savedListings",
+                params.listingId
+            );
+            try {
+                if(isSaved){
+                    await deleteDoc(ref);
+                    setIsSaved(false);
+                }else {
+                    await setDoc(ref, {
+                        listingId : params.listingId,
+                        savedAt : new Date().toISOString()
+                    });
+                    setIsSaved(true);
+                }
+            } catch (error) {
+                console.log("Error save listings", error);
             }
-        } catch (error) {
-            console.log("Error saving listings", error);
-        }
+        });
+    };
+
+    // protecting contact owner as well
+    const handleContactClick = async () => {
+        await requireAuthForAction(()=> {
+            setContact(true);
+        });
     };
     
+    // wait until auth check is completes (isAuthenticated === null while checking)
+    if(isAuthenticated === null){
+        return <p className=' text-center my-7 text-2xl'>Loading...</p>
+    }
+
+    // If guest exceeded free views, show message and modal (hook already opens modal)
+    if(isAuthenticated !== null && !isAuthenticated && !allowedToView){
+    return (
+        <div className="w-full h-[80vh] flex flex-col justify-center items-center text-center px-4">
+            <h2 className="text-2xl font-semibold mb-2">
+                Please sign in to continue
+            </h2>
+
+            <p className="text-gray-700 mb-6 max-w-md">
+                You have viewed {guestViewCount} free listing
+                {guestViewCount > 1 ? "s" : ""}.  
+                Sign in to continue viewing more listings.
+            </p>
+
+            <div className="flex gap-4">
+                <Link
+                    to="/signIn"
+                    className="px-5 py-2 bg-slate-700 text-white font-medium rounded-md hover:opacity-85"
+                >
+                    Sign In
+                </Link>
+
+                <button
+                    onClick={() => window.location.href = "/"}
+                    className="px-5 py-2 border border-gray-400 rounded-md hover:bg-gray-100"
+                >
+                    Go Home
+                </button>
+            </div>
+        </div>
+    );
+}
+
+
     return (
         <main>
             {loading && <p className=' text-center my-7 text-2xl'>Loading...</p>}
@@ -201,7 +272,7 @@ export default function Listings() {
                             </li>
                         </ul>
                         {/*  */}
-                        <GoogleMapComponent  address={listing.address}/>
+                        <GoogleMapComponent  address={listing.address} requireAuthForAction={requireAuthForAction}/>
 
                         {/*  */}
                         {currentUser && currentUser.data._id != listing.useRef && !contact && (
@@ -217,6 +288,7 @@ export default function Listings() {
                 </div>
                 
             )}
+            <LoginModel open={loginOpen} onClose={closeLoginModel} />
         </main>
     )
 }

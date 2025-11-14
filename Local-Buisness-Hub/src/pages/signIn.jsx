@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { signInFailure, signInStart, signInSuccess } from '../redux/users/slice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../components/OAuth.jsx';
+import { resetGuestViews } from '../utilsFrontend/gateAccess.js';
 /**
  * SignUp means login yani user iss component ke upr login krega.
  * With the given details (userName,email and password)
@@ -75,6 +76,7 @@ export default function SignUp() {
       // setError(null);
       dispatch(signInSuccess(data));
       navigate('/');
+      resetGuestViews();
     } catch (error) {
       mess = error.message;
       // setLoading(false);

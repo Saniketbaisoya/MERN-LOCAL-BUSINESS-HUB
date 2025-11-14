@@ -27,14 +27,14 @@ export default function App() {
         */}
         <Route  path='/listing/:listingId' element={<Listings />}/>
         <Route  element={<PrivateRoute />}>
-        <Route path='/profile' element={<Profile />}/>
-        <Route path='/saved' element={<Saved />} />
-        <Route path='/createlist' element={<Create_Listing />}/>
-        <Route path='/update-list/:listingId' element={<UpdateList />}/>
+          <Route path='/profile' element={<Profile />}/>
+          <Route path='/saved' element={<Saved />} />
+          <Route path='/createlist' element={<Create_Listing />}/>
+          <Route path='/update-list/:listingId' element={<UpdateList />}/>
         </Route>
         <Route path='/about' element={<About />}/>
       </Routes>
     </BrowserRouter>
-  )
+  ) 
 }
 

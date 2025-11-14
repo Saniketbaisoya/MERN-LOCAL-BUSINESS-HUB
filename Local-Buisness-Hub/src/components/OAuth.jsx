@@ -4,6 +4,7 @@ import { app } from '../../firebase.js';
 import { useDispatch } from 'react-redux';
 import { signInFailure, signInSuccess } from '../redux/users/slice.js';
 import { useNavigate } from 'react-router-dom';
+import { resetGuestViews } from '../utilsFrontend/gateAccess.js';
 
 export default function OAuth() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export default function OAuth() {
       const data = await res.json();
       console.log(data);
       dispatch(signInSuccess(data));
+      resetGuestViews();
       navigate('/');
 
       if(data.success == false){
