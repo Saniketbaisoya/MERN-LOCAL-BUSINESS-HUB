@@ -29,7 +29,6 @@ export default function SignUp() {
       
     });
   };
-  console.log(formData);
 
   useEffect(()=>{
     console.log("Inside");
