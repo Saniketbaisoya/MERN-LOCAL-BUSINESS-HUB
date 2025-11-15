@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 export default function LoginModel({open, onClose}) {
     if(!open) return null;
     return(
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40'>
-            <div className=' bg-white p-6 rounded-lg w-[90%] max-w-md'>
-                <h3 className=' text-xl font-bold'>Please sign in to continue</h3>
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/30'>
+            <div className=' bg-white p-6 rounded-lg w-[90%] max-w-md '>
+                <h3 className=' text-xl font-semibold'>Please sign in to continue</h3>
                 <p className=' mt-2 text-sm'>You have reached the free listing limit.</p>
 
                 <div className=' mt-4 flex gap-3'>
