@@ -130,7 +130,7 @@ export default function Profile() {
         return;
       }
       dispatch(signOutSuccess(data));
-      currentUser = null;
+      
     } catch (error) {
       console.log(error);
       dispatch(signOutFailure(data.message));
