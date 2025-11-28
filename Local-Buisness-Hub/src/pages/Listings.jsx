@@ -207,14 +207,14 @@ export default function Listings() {
                                         {/* Now this is the button of share , in which user can share the listing by copy the link of listings.... */}
                                         <div className='flex justify-end p-2 '>
                                             <button 
-                                                className=' flex items-center gap-1  p-1.5 text-sm rounded-lg bg-slate-300 uppercase hover:opacity-80 shadow-md hover:shadow-lg transition-shadow text-slate-700 '
+                                                className=' flex items-center gap-1 px-3 py-1.5 bg-slate-200 border border-slate-200 rounded-lg text-slate-700 text-xs font-semibold shadow-sm hover:bg-slate-100 hover:shadow-md active:scale-95 transition-all duration-200 backdrop-blur-sm '
                                                 onClick={handleShare}
                                             >
                                                 <FiShare2  size={20}/>
                                                 <span className=' font-semibold'>Share</span>
                                             </button>
                                             {copied && (
-                                                <div className='absolute top-12 right-3 bg-gray-800 text-white text-sm px-3 py-1 rounded-md shadow'>
+                                                <div className='absolute top-12 right-3 bg-gray-200 text-slate-700 text-sm px-3 py-1 rounded-md shadow transition-all duration-200'>
                                                     Link copied !!
                                                 </div>
                                             )}
@@ -224,7 +224,7 @@ export default function Listings() {
                                         <div className=' py-2'>
                                             
                                             <button 
-                                                className='flex items-center gap-1  p-1.5 text-sm rounded-lg bg-slate-300 uppercase hover:opacity-80 shadow-md hover:shadow-lg transition-shadow text-slate-700'
+                                                className='flex items-center gap-1 px-3 py-1.5 bg-slate-200 border border-slate-200 rounded-lg text-slate-700 text-xs font-semibold shadow-sm hover:bg-slate-100 hover:shadow-md active:scale-95 transition-all duration-200 backdrop-blur-sm'
                                                 onClick={handleSave}
                                             >
                                                 <FaSave size={20}/>
