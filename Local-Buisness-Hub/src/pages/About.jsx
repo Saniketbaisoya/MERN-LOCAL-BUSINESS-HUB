@@ -2,14 +2,14 @@
 export default function About() {
 
   return (
-    <section aria-labelledby="about-heading" className="px-6 py-12 bg-gray-50">
+    <section aria-labelledby="about-heading" className="px-2 py-8 bg-gray-50">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <header className="mb-8 text-center">
+        <header className="mb-4 text-center">
           <h1 id="about-heading" className="text-4xl font-extrabold text-slate-900 tracking-tight">
             About <span className="text-slate-700">LocalBusinessHub</span>
           </h1>
-          <p className="mt-2 text-sm text-slate-500 max-w-xl mx-auto">
+          <p className="mt-2 text-sm text-slate-500 max-w mx-auto">
             Helping local people find affordable rooms and homes for rent — easily and without stress.
           </p>
         </header>
