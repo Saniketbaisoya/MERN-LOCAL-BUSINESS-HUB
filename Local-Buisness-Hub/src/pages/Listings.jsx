@@ -58,6 +58,9 @@ export default function Listings() {
         MAX_FREE_VIEWS,
     } = useGatedAccess(params.listingId, {openLoginModel});
 
+    // button click -> showHide = true, but 
+    const [showHide,setShowHide] = useState(false);
+
 
     useEffect(()=> {
         const fetchLising = async ()=> {
@@ -284,13 +287,19 @@ export default function Listings() {
                             </li>
                         </ul>
                         {/*  */}
-                        <GoogleMapComponent  address={listing.address} requireAuthForAction={requireAuthForAction}/>
+                        <button onClick={()=> setShowHide(prev => !prev)}>
+                            <span 
+                            className=' block mx-auto mt-4 px-5 py-2.5 bg-slate-700 text-white font-semibold text-sm rounded-lg shadow-md hover:opacity-95 hover:shadow-lg active:scale-95 transition-all duration-200'>{showHide ? "Hide Map" : "Show Map"}</span>
+                            {showHide ? <GoogleMapComponent  address={listing.address} requireAuthForAction={requireAuthForAction}/> : ""}
+                            
+                        </button>
+                        
 
                         {/*  */}
                         {currentUser && currentUser.data._id != listing.useRef && !contact && (
                             <button
                                 onClick={()=> setContact(true)}
-                                className=' bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+                                className=' bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 hover:shadow-lg active:scale-95 transition-all duration-200 p-3 font-semibold'
                             >Contact Owner</button>
                         )}
                         <span className=' mt-5 '>{contact && <Contact listing={listing}/>}</span>
