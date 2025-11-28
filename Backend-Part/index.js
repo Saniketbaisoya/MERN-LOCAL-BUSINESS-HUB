@@ -26,5 +26,4 @@ app.get('/*any',(req,res)=> {
 app.listen(PORT,async ()=>{
     await connectDb();
     console.log(`Server is started at ${PORT}`);
-    
 })
