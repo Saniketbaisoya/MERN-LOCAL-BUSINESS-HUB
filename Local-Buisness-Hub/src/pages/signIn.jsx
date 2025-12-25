@@ -20,7 +20,7 @@ export default function SignUp() {
   const {error,loading} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const mess = "";
+  let mess = "";
 
   const handleChange = (e) =>{
     setFormData({
