@@ -6,6 +6,24 @@ import 'swiper/css/bundle';
 import { useEffect, useState } from 'react';
 import ListingItem from '../components/ListingItem';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { ChatWidget } from "../components/chat-widget"
+
+export function YourPage() {
+  return (
+    <div>
+      {/* Your existing page content */}
+      <h1>My Product</h1>
+      
+      {/* Add the chat popup - it floats on top of everything! */}
+      <ChatWidget 
+        brandName="Your Brand"
+        subtitle="We're here to help"
+        primaryColor="#3b82f6"
+        position="bottom-right"
+      />
+    </div>
+  )
+}
 
 export default function Home() {
   const [offerListings,setOfferListings] = useState([]);
@@ -195,6 +213,14 @@ export default function Home() {
             </div>
         </div>
       </div>
+
+      {/* Floating chat widget on Home page */}
+      <ChatWidget 
+        brandName="Local Business Hub"
+        subtitle="We're here to help"
+        primaryColor="#3b82f6"
+        position="bottom-right"
+      />
 
     </div>
   );
