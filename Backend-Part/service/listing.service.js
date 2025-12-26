@@ -65,7 +65,7 @@ async function getAllLists({ searchTerm, sort, order, limit, startIndex, offer, 
         { $limit: parseInt(limit) || 9 }
     ]);
     return response;
-
+    // this is old code... //
     // const response = await List.find({
     //     name: { $regex: searchTerm, $options: 'i' },
     //     offer,
