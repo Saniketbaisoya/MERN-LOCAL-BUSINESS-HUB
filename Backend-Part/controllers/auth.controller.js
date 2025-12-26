@@ -5,6 +5,7 @@ import {StatusCodes} from 'http-status-codes'
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from "../configuration/serverConfig.js";
 import User from "../schema/user.model.js";
+
 async function signUp(req,res) {
     try {
         const response = await authService({
@@ -31,7 +32,7 @@ async function signIn(req,res) {
             password : req.body.password
         })
         
-        const token = await jwt.sign({id : response._id, email : response.email},SECRET_KEY);
+        const token = await jwt.sign({id : response._id, email : response.email},SECRET_KEY, { expiresIn: '1d'});
         res.cookie("access-token",token,{
             httpOnly : true,
             secure : false
@@ -57,7 +58,7 @@ async function google(req,res) {
     try {
         const user = await User.findOne({email : req.body.email});
         if(user){
-            const token = await jwt.sign({id: user._id, email: user.email},SECRET_KEY);
+            const token = await jwt.sign({id: user._id, email: user.email},SECRET_KEY, { expiresIn: '1d'});
             res.cookie("access-token",token,{
                 httpOnly : true,
                 secure : false

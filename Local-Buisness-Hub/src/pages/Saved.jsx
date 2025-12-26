@@ -5,7 +5,9 @@ import { db } from '../../firebase';
 import ListingItem from '../components/ListingItem';
 
 export default function Saved() {
+  
   const {currentUser} = useSelector((state)=> state.user);
+  console.log(currentUser);
   // now iss hook function ko array based property isliye bnaya
   // kyuki yeah store krega voh sari listings ko jo saved hui thi user ke through
   // and also voh sari listings fetch hogi proxy req se listingId ka use krke jo firestore database

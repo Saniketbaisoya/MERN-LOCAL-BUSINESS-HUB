@@ -21,7 +21,7 @@ async function authService(UserData) {
 async function signInService(LoginData) {
 
     const email  = LoginData.email;
-    const password = LoginData.password
+    const password = LoginData.password;
     const response = await User.findOne({email});
     if(!response) throw new AppError("User not found!", StatusCodes.BAD_REQUEST);
     const hashedPasswordOnStorage = response.password;
