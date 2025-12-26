@@ -30,15 +30,51 @@ async function updateList(id,data) {
  * Then await it means execute then, it will return the array document means object....
  */
 async function getAllLists({ searchTerm, sort, order, limit, startIndex, offer, furnished, parking, type }) {
-    const response = await List.find({
-        name: { $regex: searchTerm, $options: 'i' },
+    // Now yha maine order ki string value joki asc ya desc hogi usko 1 and -1 mongoDb number mai convert krdiya...
+    const sortOrder = order === 'desc' ? -1 : 1;
+
+    // Then there is a query which is built on the name and other expression...
+    const query = {
+        name : {$regex: searchTerm, $options: 'i'},
         offer,
         furnished,
         parking,
-        type,
-    }).sort({ [sort]: order })
-    .limit(limit)
-    .skip(startIndex);
+        type
+    };
+    // Now abb yha query and ek finalPrice ki filed ko add krke aggregate kr rhe hai Lists ke collections ko in mongoDb,
+    // Now finalPrice is basically based on offer if the offer is true and discountedPrice is > 0 then finalPrice = discountedPrice other wise finalPrice = regularPrice,
+    // Also the we will sort according to sortOrder in asc or desc
+    // Then there is skip or limit for pagination...
+    const response = await List.aggregate([
+        {$match: query},
+        {
+            $addFields: {
+                finalPrice: {
+                    $cond: {
+                        if: { $and : [{ $eq: ['$offer', true] }, { $gt: ['$discountedPrice', 0] }] },
+                        then: '$discountedPrice',
+                        else: '$regularPrice'
+                    }
+                }
+            }
+        },
+        {
+            $sort: { [sort]: sortOrder}
+        },
+        { $skip: parseInt(startIndex) || 0 },
+        { $limit: parseInt(limit) || 9 }
+    ]);
     return response;
+
+    // const response = await List.find({
+    //     name: { $regex: searchTerm, $options: 'i' },
+    //     offer,
+    //     furnished,
+    //     parking,
+    //     type,
+    // }).sort({ [sort]: order })
+    // .limit(limit)
+    // .skip(startIndex);
+    // return response;
 }
 export {ListService, deleteList, updateList, getAllLists};

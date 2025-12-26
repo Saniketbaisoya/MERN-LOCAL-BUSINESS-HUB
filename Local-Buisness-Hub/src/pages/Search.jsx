@@ -14,7 +14,7 @@ export default function Search() {
         parking : false,
         furnished : false,
         offer : false,
-        sort : 'created_at',
+        sort : 'createdAt',
         order : 'desc'
 
     });
@@ -76,7 +76,7 @@ export default function Search() {
             setSideBarData({...sideBarData, [e.target.id]: e.target.checked || e.target.checked == 'true' ? true : false})
         }
         if(e.target.id === 'sort_order'){
-            const sort = e.target.value.split('_')[0] || 'created_at';
+            const sort = e.target.value.split('_')[0] || 'createdAt';
             const order = e.target.value.split('_')[1] || 'desc';
 
             setSideBarData({...sideBarData, sort, order});
@@ -211,12 +211,18 @@ export default function Search() {
                             onChange={handleChange}
                             className=' border rounded-lg p-3 font-semibold'
                             id='sort_order'
-                            defaultValue={'created_at_desc'}
+                            defaultValue={'createdAt_desc'}
                         >
-                            <option>Price high to low</option>
-                            <option>Price low to high</option>
-                            <option>Latest</option>
-                            <option>Oldest</option>
+                            {/* Now yha problem yeah thi ki jb hmm koi bhi option select krte the toh voh
+                              * uss case mai value sort ki direct chli jati thi ex: if we select Price high to low then this go as value="Price high to low"
+                              * then backend mai yeah jata tha or mongoDb isko ek invalid field bnake silently fail krdeta tha yeah operation sort ka..
+                              * And in handle change voh e.target.value joki 'Price high to low' yeah hoti isko split bhi ni kr pa rha tha but now value is defined 
+                              * And this will be split properly....
+                            */}
+                            <option value='finalPrice_desc' >Price high to low</option>
+                            <option value='finalPrice_asc' >Price low to high</option>
+                            <option value='createdAt_desc' >Latest</option>
+                            <option value='createdAt_asc' >Oldest</option>
                         </select>
                     </div>
                     {/*  Here we have a seacrh button....*/}
