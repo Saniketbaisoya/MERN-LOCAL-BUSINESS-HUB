@@ -20,15 +20,16 @@ import { chatService } from '../service/chat.service.js';
                      when it comes from the controller.
 
     Structure of successResponse and ErrorResponse: See when i try to use my SuccessResponse and ErrorResponse structure to
-                                                    send to the gemini then it will not consider it to parse and send the response
+                                                    send to the gemini then it will not consider it to parse and send the response,
                                                     so it is neccassary to use their define structure which is already given in their peace of code
+                                                    which is { success: parameter(true/false), response: botResponse }
 */
 
 /**
  * @param {*} req => { chatHistroy, message };
  * @returns => statusCode and {
- *      success parameter,
- *      response
+ *      success parameter(true/false),
+ *      response: botResponse
  * };
  */
 
