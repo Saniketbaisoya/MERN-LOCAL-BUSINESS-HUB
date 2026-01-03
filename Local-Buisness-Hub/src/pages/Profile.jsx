@@ -873,7 +873,7 @@ export default function Profile() {
                   </Link>
 
                   <div className="flex-1 pr-16">
-                    <Link to={`/listing/${l._1d}`} className="block">
+                    <Link to={`/listing/${l._id}`} className="block">
                       <p className="text-lg text-slate-800 font-semibold leading-tight truncate">{l.name}</p>
                     </Link>
                   </div>
@@ -898,4 +898,3 @@ export default function Profile() {
 
 // --- END OF UPDATED UI ---
 }
-
