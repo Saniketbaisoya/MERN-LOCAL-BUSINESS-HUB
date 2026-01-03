@@ -170,6 +170,7 @@ MERN-LOCAL-BUSINESS-HUB/
 ```bash
 cd Backend-Part
 npm install
+# Port ex.--> Port = 1000
 # Configure .env with:
 # MONGO_URI
 # GEMINI_API_KEY
