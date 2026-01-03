@@ -154,7 +154,11 @@ MERN-LOCAL-BUSINESS-HUB/
 │ ├── postcss.config.js # PostCSS configuration
 │ ├── vite.config.js # Vite configuration
 │ └── package.json
-│
+|
+├── .env # Backend environment variables
+├── package.json
+├── .gitIgnore
+|
 ├── screenshots/ # UI screenshots for README
 │ ├── chatbot.png
 │ └── listings.png
@@ -165,10 +169,10 @@ MERN-LOCAL-BUSINESS-HUB/
 
 ## 🚦 Quick Start
 
-### ▶ Backend Initialization
+### ▶ Backend Initialization ( Note: The Backend-part folder inside the MERN-LOCAL-BUSINESS-HUB folder and this Backend-part folder just contain the code files, so it is recommended to install the npm inside the MERN-LOCAL-BUSINESS-HUB folder, as package.json of backend is inside the MERN-LOCAL-BUSINESS-HUB folder )
 
 ```bash
-cd Backend-Part
+cd MERN-LOCAL-BUSINESS-HUB
 npm install
 # Port ex.--> Port = 1000
 # Configure .env with:
