@@ -126,29 +126,41 @@ graph TD
 
 ---
 
-## 📂 Project Organization
+## 📁 Project Structure
 
-### 🔧 Backend (`/Backend-Part`)
-Backend-Part/
-├── routes/ # API endpoint definitions
-├── controllers/ # Request handlers & responses
-├── service/ # Business logic & AI integrations
-├── validation/ # Auth & security middlewares
-└── models/ # MongoDB schemas
-
-
-### 🎨 Frontend (`/Local-Buisness-Hub`)
-Local-Buisness-Hub/
-├── src/
-│ ├── components/ # Reusable UI components
-│ ├── pages/ # React pages (Home, Profile, Listings, etc.)
-│ ├── redux/ # Global state management
-│ └── utilsFrontend/ # Utility helpers
-├── firebase.js # Firebase configuration
-├── .env # Frontend environment variables
-└── vite.config.js
-
-
+```text
+MERN-LOCAL-BUSINESS-HUB/
+├── Backend-Part/
+│ ├── routes/ # API endpoint definitions
+│ ├── controllers/ # Request handlers & responses
+│ ├── service/ # Business logic & AI integrations
+│ ├── validation/ # Auth & security middlewares
+│ └── models/ # MongoDB schemas
+│
+├── Local-Buisness-Hub/
+│ ├── src/
+│ │ ├── components/ # Reusable UI components ( chat-widget, Contact, GoogleMapComponent, header, ListingItem, LoginModel, OAuth, PrivateRoute. )
+│ │ ├── pages/ # React pages ( Home, About, Create_Listing, Saved, Search, signIn, signUp, UpdateList, Profile, Listings. )
+│ │ ├── redux/ # Global state management 
+| | |   ├── users
+| | |   |    ├── slice.js
+| | |   ├── store.js                                
+│ │ └── utilsFrontend/ # Utility helper functions
+│ │
+│ ├── firebase.js # Firebase configuration
+│ ├── .env # Frontend environment variables
+│ ├── index.html # App entry HTML
+│ ├── tailwind.config.js # Tailwind CSS configuration
+│ ├── postcss.config.js # PostCSS configuration
+│ ├── vite.config.js # Vite configuration
+│ └── package.json
+│
+├── screenshots/ # UI screenshots for README
+│ ├── chatbot.png
+│ └── listings.png
+│
+└── README.md
+```
 ---
 
 ## 🚦 Quick Start
