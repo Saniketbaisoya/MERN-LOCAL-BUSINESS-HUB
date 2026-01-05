@@ -35,7 +35,6 @@ import { chatService } from '../service/chat.service.js';
 
 async function chat_controller(req, res) {
     try {
-       
 
         // here add the .env's GEMINI_API_KEY by first seggregating into the configuration.js folder... //
         if (!GEMINI_API_KEY) {
