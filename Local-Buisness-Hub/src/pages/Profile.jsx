@@ -598,6 +598,7 @@ export default function Profile() {
   const [fileUploadError,setFileUploadError] = useState(false);
   const [showListingErrors,setshowListingErrors] = useState(null);
   const [userListings, setuserListings] = useState(null);
+  const [showListings, setShowListings] = useState(false);
 
   useEffect(()=>{
     if(file){
@@ -712,6 +713,12 @@ export default function Profile() {
   const handleShowListings = async (e)=> {
     e.preventDefault();
     try {
+
+      if(showListings){
+        setShowListings(false);
+        return;
+      }
+      setShowListings(true);
       const response = await fetch(`/api/user/listings/${currentUser.data._id}`,{ 
         method : 'GET',
         headers : { 
@@ -766,9 +773,9 @@ export default function Profile() {
 
             {/* Avatar - stays inside form (order preserved) */}
             <img 
-              onClick={()=> fileRef.current.click()}
+              onClick={() => fileRef.current.click()}
               className="rounded-full h-28 w-28 object-cover cursor-pointer self-center md:self-start justify-self-center md:justify-self-start ring-4 ring-slate-50 shadow-lg order-1 md:order-1"  /* UPDATED: larger avatar with ring + shadow; placed left on md screens */
-              src={ formData?.avatar || currentUser.data.avatar } 
+              src={ formData?.avatar || currentUser.data.avatar }
               alt='profile'
             />
 
@@ -790,7 +797,7 @@ export default function Profile() {
               <input 
                 onChange={handleChange}
                 type='text' 
-                id='userName'  
+                id='userName'
                 placeholder='username' 
                 className='w-full px-6 py-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-slate-300 outline-none'  /* UPDATED: roomy input, slate style */
                 defaultValue={currentUser.data.userName}
@@ -853,43 +860,47 @@ export default function Profile() {
         {/* user listings block — unchanged structure but styled */}
         <div className="border-t border-slate-100 p-6 bg-slate-50">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-slate-800">Your Listings</h3>
+            {/* <h3 className="text-lg font-semibold text-slate-800">Your Listings</h3> */}
             <div className="flex gap-3">
-              <button onClick={handleShowListings} className="text-sm text-green-700 font-semibold hover:underline">Show Listings</button>
+              <button onClick={handleShowListings} className="text-sm text-green-700 font-semibold hover:underline">{showListings ? 'Hide Listings' : 'Show Listings'}</button>
               <Link to={'/saved'} className="text-sm text-green-700 font-semibold hover:underline">Saved</Link>
             </div>
           </div>
 
-          {userListings && userListings.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {userListings.map((l) => (
-                /* --- single listing card (replace only className values here) --- */
-                <div
-                  key={l._id}
-                  className="w-full bg-white rounded-lg border border-slate-100 p-4 flex items-start gap-6 overflow-hidden relative"
-                >
-                  <Link to={`/listing/${l._id}`} className="w-28 h-28 rounded-md overflow-hidden flex-shrink-0">
-                    <img src={l.imageUrls[0]} alt="cover" className="w-full h-full object-cover" />
-                  </Link>
-
-                  <div className="flex-1 pr-16">
-                    <Link to={`/listing/${l._id}`} className="block">
-                      <p className="text-lg text-slate-800 font-semibold leading-tight truncate">{l.name}</p>
+          { showListings && 
+            ( userListings && userListings.length > 0 ? (
+            
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {userListings.map((l) => (
+                  /* --- single listing card (replace only className values here) --- */
+                  <div
+                    key={l._id}
+                    className="w-full bg-white rounded-lg border border-slate-100 p-4 flex items-start gap-6 overflow-hidden relative"
+                  >
+                    <Link to={`/listing/${l._id}`} className="w-28 h-28 rounded-md overflow-hidden flex-shrink-0">
+                      <img src={l.imageUrls[0]} alt="cover" className="w-full h-full object-cover" />
                     </Link>
-                  </div>
 
-                  <div className="absolute right-6 top-1/2 transform -translate-y-1/2 flex flex-col items-end gap-3">
-                    <button onClick={()=> handleRemoveList(l._id)} className="text-red-600 uppercase font-semibold text-sm hover:underline">Delete</button>
-                    <Link to={`/update-list/${l._id}`}>
-                      <button className="text-green-700 uppercase font-semibold text-sm hover:underline">Edit</button>
-                    </Link>
+                    <div className="flex-1 pr-16">
+                      <Link to={`/listing/${l._id}`} className="block">
+                        <p className="text-lg text-slate-800 font-semibold leading-tight truncate">{l.name}</p>
+                      </Link>
+                    </div>
+
+                    <div className="absolute right-6 top-1/2 transform -translate-y-1/2 flex flex-col items-end gap-3">
+                      <button onClick={()=> handleRemoveList(l._id)} className="text-red-600 uppercase font-semibold text-sm hover:underline">Delete</button>
+                      <Link to={`/update-list/${l._id}`}>
+                        <button className="text-green-700 uppercase font-semibold text-sm hover:underline">Edit</button>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-sm text-slate-500">No listings found. Create your first listing to show up here.</div>
-          )}
+                ))}
+              </div>
+            ) : (
+              <div className="text-sm text-slate-500">No listings found. Create your first listing to show up here.</div>
+            )
+          )
+        }
         </div>
       </div>
     </div>
