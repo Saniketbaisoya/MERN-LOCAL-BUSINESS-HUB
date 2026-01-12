@@ -45,18 +45,27 @@ export default function Saved() {
   }
 
   return (
-    <div className=' flex mt-4'>
-      <h1 className='text-3xl font-semibold text-slate-600 my-7 ml-10 '>Your Saved Listings :</h1>
+  <div className="px-4 sm:px-6 lg:px-10 mt-6">
+    {/* Heading */}
+    <h1 className="text-2xl sm:text-3xl font-semibold text-slate-600 mb-6">
+      Your Saved Listings
+    </h1>
 
-      {savedListings.length === 0 ? (
-        <p>No Saved Listings yet.</p>
-      ) : (
-        <div className=' grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-10'>
-          {savedListings.map(listing => (
-            <ListingItem   listings={listing.data} key={listing.data._id}/>
-          ))}
-        </div>
-      )}
-    </div>
-  )
+    {/* Empty state */}
+    {savedListings.length === 0 ? (
+      <p className="text-slate-500 text-sm">
+        No Saved Listings yet.
+      </p>
+    ) : (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {savedListings.map((listing) => (
+          <ListingItem
+            key={listing.data._id}
+            listings={listing.data}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+);
 }
