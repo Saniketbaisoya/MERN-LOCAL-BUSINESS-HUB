@@ -6,7 +6,7 @@ import 'swiper/css/bundle';
 import { useEffect, useState } from 'react';
 import ListingItem from '../components/ListingItem';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { ChatWidget } from "../components/chat-widget"
+import  ChatWidget  from "../components/chat-widget"
 
 export function YourPage() {
   return (
