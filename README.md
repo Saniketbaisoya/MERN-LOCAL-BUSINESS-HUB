@@ -192,8 +192,6 @@ npm install
 npm run dev
 ```
 ### One Final Step for You
-To make this look like a senior-level project, I recommend taking a clear screenshot of the **Chatbot UI** and your **Listings page**, saving them in a folder called `screenshots`, and adding them to the README under a "Gallery" section. 
-
-Would you like me to draft a specific "Technical Summary" of how you optimized the **Gemini 1.5 Flash** integration to explain during your interview?
+To make this look like a senior-level project, I recommend taking a clear screenshot of the **Chatbot UI** and your **Listings page**, saving them in a folder called `screenshots`, and adding them to the README under a "Gallery" section.
 
 
