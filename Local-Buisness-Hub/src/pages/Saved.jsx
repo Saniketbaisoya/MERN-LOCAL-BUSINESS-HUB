@@ -28,6 +28,13 @@ export default function Saved() {
           ids.map(id => fetch(`api/listing/get/${id}`).then(res => res.json()))
         );
 
+        /**
+         * Now, koi agr listings hmne delete krdi toh kyuki voh store ho rhi hai firebase mai uski id isliye uski id rhe jati hai
+         * And then savedListings sbhi id's ke upr listings ki get request ko pass krta hai, then sbhi lsitings toh aajayegi lekin delete hui vali pr listing not found aajayega
+         * Jiski vje se array mai inconsistency aajayegi and listing not found ke _id read nhi hooga
+         * Toh isi problem ko solve krne ke liye hmne sbse jo bhi response ayega uspr filter lgaya and then unhi items/response ko include kiya jinme success parameter exist krta hai
+         * Then unhi responses ko lekr hmm then usko validListings mai store krege and then usko pass krdege setSavedListings ke andr isse Listing not found vali sari listings hat jayegi and data consistent rhega in validListings mai...
+         */
         const validListings = responses.filter(
           item => item?.success && item?.data?._id
         );
