@@ -1,6 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { db } from '../../firebase';
 import ListingItem from '../components/ListingItem';
 
@@ -28,7 +28,11 @@ export default function Saved() {
           ids.map(id => fetch(`api/listing/get/${id}`).then(res => res.json()))
         );
 
-        setSavedListings(responses);
+        const validListings = responses.filter(
+          item => item?.success && item?.data?._id
+        );
+
+        setSavedListings(validListings);
         
       } catch (error) {
         console.log("Error Loading Saved Listings",error);
